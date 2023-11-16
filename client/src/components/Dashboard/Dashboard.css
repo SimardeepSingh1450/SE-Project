@@ -1,6 +1,111 @@
-.main-dashboard{
+/* .main-dashboard{
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
+.dashboard-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+.main-dashbard {
+    /* min-height: 100vh; */
+    height: 100vh;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    position: relative;
+  }
+  
+.title{
+    position: absolute;
+    top: 7.5%;
+    left: 50%;
+    transform: translate(-50%,0%);
+    color: white;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 5em;
+
+
+    border-right: .15em solid orange; /* The typwriter cursor */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation: 
+        blink-caret .75s step-end infinite;
+}
+
+.tictactoe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-55%);
+}
+
+.button-container{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.button
+{
+    /* background-color: white; */
+    color: white;
+    padding: 0.5em 1em;
+    margin: 0em 1em;
+    border-radius: 0.5em;
+    font-weight: 700;
+    transition: all 0.25s ease-in-out;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+
+
+
+#join {
+    box-shadow: 0 0 20px #01fff4;
+    border: 1px solid #01fff4; 
+    color: #01fff4;
+}
+#rand {
+    box-shadow: 0 0 20px #fff205;
+    border: 1px solid #fff205;
+    color: #fff205;
+}
+#create {
+    box-shadow: 0 0 20px #7cff01;
+    border: 1px solid #7cff01;
+    color: #7cff01;
+}
+
+#join:hover {
+    box-shadow: 0 0 70px #01fff4;
+    border-width: 3px;
+}
+#rand:hover {
+    box-shadow: 0 0 70px #fff205;
+    border-width: 3px;
+}
+#create:hover {
+    box-shadow: 0 0 70px #7cff01;
+    border-width: 3px;
+}
+
+.button:hover
+{
+    transform: scale(1.05);
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
 }

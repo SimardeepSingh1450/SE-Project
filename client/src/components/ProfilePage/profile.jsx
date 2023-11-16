@@ -1,12 +1,16 @@
 import { Form, Link, useLoaderData } from 'react-router-dom'
-import background from '../assets/space.jpg'
-import backgroundVideo from '../assets/background.mp4'
-import Popup from '../components/Popup'
-import { useMemo, useState } from 'react'
+// import background from '../assets/space.jpg'
+import backgroundVideo from './background.mp4'
+// import Popup from '../Popup'
+import Popup from '../Popup/Popup'
+import { useMemo, useState, useEffect } from 'react'
+import "./style.scss";
+import "bootstrap/dist/js/bootstrap.bundle.min"
+import './profile.css'
 
-export async function loader({params}) {
+async function getData() {
     const user = {
-        name: params.userName,
+        name: 'test User',
         location: 'Punjab, India',
         summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
         rank: '7755',
@@ -62,8 +66,20 @@ export async function loader({params}) {
 
 export default function Profile() {
 
-    const {user, friends, games} = useMemo(()=>useLoaderData(),[]);
+    useEffect(() => {
+        async function temp () {const {user, friends, games} = await getData(); 
+            setUser(user);
+            setFriends(friends);
+            setGames(games)
+        }
+    temp()
+    }, [])
+    // const {user, friends, games} = await getData();
+    const [user, setUser] = useState({});
+    const [friends, setFriends] = useState([]);
+    const [games, setGames] = useState([]);
     const [openEditPopup,setOpenEditPopup] = useState(false);
+
 
 
     return (
@@ -96,9 +112,9 @@ export default function Profile() {
                     <h5>Global Rank: #{user.rank}</h5>
                     <h5>Wins: {user.wins}</h5>
                     <h5>Losses: {user.losses}</h5>
-                    <Form>
+                    {/* <Form>
                         <button onClick={()=>setOpenEditPopup(true)} type="submit" className="btn btn-outline-primary mt-auto edit-profile-button">Edit Profile</button>
-                    </Form>
+                    </Form> */}
                 </div>
             </div>
 
