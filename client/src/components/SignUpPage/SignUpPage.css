@@ -16,7 +16,7 @@ video{
 
 @font-face {
     font-family: pixelatedFont;
-    src: url('./assets/warfare.ttf');
+    src: url('../LoginPage//assets//warfare.ttf');
   }
 
 .gameLoginHeader{
@@ -70,11 +70,4 @@ form{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.login-page-bottom-alignment{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
 }

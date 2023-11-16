@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const {restrictToLoggedInUserOnly} = require('./middlewares/auth');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 //db connection
 require('./config/connection');
@@ -9,9 +11,15 @@ require('./config/connection');
 //Importing express Routers
 const userRouter = require('./routes/user');
 
-/*In-built Middlewares */
+/*Middlewares*/
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(cors({
+    origin:["http://localhost:3000"],
+    methods:["GET","POST"],
+    credentials:true
+}));
 // app.use(express.urlencoded({extended:false}));
 
 //Using Routers
@@ -19,7 +27,7 @@ app.use('/user',userRouter);//User Login-SignUP Router
 
 //Authentication Path Restricted ROUTE
 app.get('/loggedIn',restrictToLoggedInUserOnly,(req,res)=>{
-    res.send('Logged In');
+    return res.json({loggedIn:true});
 });
 
 app.get('/',(req,res)=>{

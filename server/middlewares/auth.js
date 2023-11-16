@@ -4,13 +4,13 @@ async function restrictToLoggedInUserOnly(req,res,next){
     const userUID = req.cookies.uid;
 
     if(!userUID){
-        res.json({msg:"User is not logged in"});
+        return res.json({loggedIn:false,msg:"User is not logged in,number-1"});
     }
 
     const user = getUser(userUID);
 
-    if(!userUID){
-        res.json({msg:"User is not logged in"});
+    if(!user){
+        return res.json({loggedIn:false,msg:"User is not logged in,number-2"});
     }
 
     req.user = user;
