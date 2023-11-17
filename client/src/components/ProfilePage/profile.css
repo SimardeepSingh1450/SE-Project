@@ -18,6 +18,11 @@ body {
   position: relative;
 }
 
+.main-profile-div {
+  overflow: scroll;
+  height: 93.2vh;
+}
+
 /* .profile-pic-container {
   width: 100%;
   height: 100%;
