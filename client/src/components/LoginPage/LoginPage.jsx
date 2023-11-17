@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './LoginPage.css'
 import {motion} from 'framer-motion';
 import LoginBg from './assets/laser-beam-login.mp4'
@@ -6,16 +6,36 @@ import {LiaGamepadSolid} from 'react-icons/lia';
 import {HiMail} from 'react-icons/hi'
 import {RiLockPasswordFill} from 'react-icons/ri'
 import {useNavigate} from 'react-router-dom';
-import axios from 'axios';
-
+import Cookies from 'universal-cookie';
+import {StreamChat} from 'stream-chat';
 
 const LoginPage = () => {
+    const api_key = "jhw8xp9vt565";
+    const cookies = new Cookies();
+    const token = cookies.get('token');
+    const client = StreamChat.getInstance(api_key);
+
     const navigate = useNavigate();
 
     const [email,setEmail] = useState("");
     const [pass,setPass] = useState("");
     const [passPrompt,setPassPrompt] = useState(false);
     const [promptMsg,setPromptMsg] = useState("");
+
+    const connectFunction = () =>{
+
+      if(token){
+        client.connectUser({
+          id:cookies.get('userId'),
+          name:cookies.get('username'),
+          hashedPassword:cookies.get('hashedPassword'),
+        },token).then((user)=>{
+          console.log('getStream Account User:',user)
+        })
+      }
+    }
+    
+
     const signInHandle=async()=>{
         if(email == ""){
             setPassPrompt(true);
@@ -57,7 +77,7 @@ const LoginPage = () => {
 
 
         const res = await data.json();
-        // console.log('Data from login fetch is :',res);
+        console.log('Data from login fetch is :',res);
         
         if(res.doesNotExist){
           setPassPrompt(true);
@@ -65,9 +85,27 @@ const LoginPage = () => {
         }else{
           //else we navigate to the dashboard and set the uuid inside localStorage
           console.log(res.msg);
+
+          // //Then we setup GETSTREAM Cookies
+          //Now Setting up cookies for GetSTream.io
+          cookies.set("token",res.token);
+          cookies.set("username",res.user.username);
+          cookies.set("password",res.user.password);//this is hashed password
+          cookies.set("userId",res.userId);
+
+          connectFunction();
+
           navigate("/dashboard");
         }
     }
+
+    // useEffect(()=>{
+    //   const initialDisconnect = async()=> {
+    //    await client.disconnectUser();
+    //   }
+
+    //   initialDisconnect();
+    // },[])
 
   return (
     <div className='mainLoginPageDiv'>

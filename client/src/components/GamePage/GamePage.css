@@ -1,0 +1,8 @@
+.waiting-lobby-msg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    color: greenyellow;
+    text-shadow: 0px 0px 5px greenyellow;
+}

@@ -23,6 +23,7 @@
     "react-scripts": "5.0.1",
     "sass": "^1.69.5",
     "stream-chat": "^8.14.2",
+    "stream-chat-react": "^10.20.0",
     "styled-components": "^6.1.1",
     "universal-cookie": "^6.1.1",
     "web-vitals": "^2.1.4"
