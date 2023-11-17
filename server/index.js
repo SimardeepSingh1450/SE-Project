@@ -5,13 +5,6 @@ const {restrictToLoggedInUserOnly} = require('./middlewares/auth');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-//key and secret for get-stream
-const {StreamChat} = require("stream-chat");
-const api_key = "jhw8xp9vt565";
-const api_secret = "nmar5njkvyghnqmdmmgmzv2dv48gmsdscecgjac3cmcgjrns26nps2ykmrhnsmnb";
-
-//GETSTREAM Client
-const serverClient = StreamChat.getInstance(api_key,api_secret);
 
 //Socket.io setup
 const http = require('http');
@@ -34,6 +27,9 @@ require('./config/connection');
 //Importing express Routers
 const userRouter = require('./routes/user');
 const friendsRouter = require('./routes/friends');
+const statsRouter = require('./routes/stats');
+const gamingHistory = require('./routes/history');
+const notificationsRouter = require("./routes/notifications");
 
 /*Middlewares*/
 app.use(express.json());
@@ -49,6 +45,9 @@ app.use(cors({
 //Using Routers
 app.use('/user',userRouter);//User Login-SignUP Router
 app.use('/friends',restrictToLoggedInUserOnly,friendsRouter);//Friends-List ROuter
+app.use('/stats',statsRouter);
+app.use('/history',gamingHistory);
+app.use('/notifications',notificationsRouter);
 
 //Authentication Path Restricted ROUTE
 app.get('/loggedIn',restrictToLoggedInUserOnly,(req,res)=>{

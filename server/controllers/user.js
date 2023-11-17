@@ -1,5 +1,6 @@
 const userModel = require('../model/UserProfile');
 const friendsModel = require('../model/FriendsList');
+const playerStatsModel = require('../model/playerStats');
 const uuid = require('uuid');
 const {setUser} = require('../service/auth');
 const bcrypt = require("bcrypt");
@@ -45,6 +46,16 @@ async function handleUserSignUp(req,res){
     });
 
     await newFriendList.save();
+
+    //Adding user inside playerStatsDB
+    const stats = new playerStatsModel({
+        playerID:user._id,
+        wins:0,
+        losses:0,
+        gamesPlayed:0
+    });
+
+    await stats.save();
 
     //Saving the user to getstream
     const token = serverClient.createToken(newUserID);

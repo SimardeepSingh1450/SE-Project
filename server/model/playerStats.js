@@ -13,7 +13,7 @@ const playerStatsSchema = new mongoose.Schema({
     losses:{
         type:Number
     },
-    GamesPlayed:{
+    gamesPlayed:{
         type:Number
     }
 });
