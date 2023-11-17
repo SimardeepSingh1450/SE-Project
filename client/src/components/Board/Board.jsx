@@ -114,11 +114,11 @@ const Board = ({result,setResult}) => {
     <div className="board">
 
             <div className='top-game-content'>
-                <h1 className='in-game-text'>You are Player: {player}</h1>
-                <h1 className='in-game-text'>Current Player's Turn: {turn}</h1>
+                <h1 className='in-game-text ingame-text-1'>You are Player: {player}</h1>
+                <h1 className='in-game-text ingame-text-2'>Current Player's Turn: {turn}</h1>
             </div>
 
-        <div className="tictactoe">
+        <div className="tictactoe board-in-game">
 
             <br/>
 
