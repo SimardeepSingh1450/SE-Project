@@ -14,6 +14,7 @@ export default function ButtonAppBar() {
         <div className="nav-link ml-5"><NavLink to="/profile" style={linkStyle} id='profile' className='links'>Profile</NavLink></div>
         <div className="nav-link ml-5"><NavLink to="/notificationsPage" style={linkStyle} id='notifications' className='links'>Notifications</NavLink></div>
         <div className="nav-link ml-5"><NavLink to="/friendsPageNew" style={linkStyle} id='friends' className='links'>Friends</NavLink></div>
+        <div className="nav-link ml-5"><NavLink to="/leaderboard" style={linkStyle} id='leaderboard' className='links'>Leaderboard</NavLink></div>
       </div>
       <ul className="navbar-nav ml-auto mr-5">
         <div className="nav-link "><NavLink to="/logout" style={linkStyle} id='logout'>Log Out</NavLink></div>

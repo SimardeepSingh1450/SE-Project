@@ -82,7 +82,7 @@ const FriendsPageNew = () => {
                               return (
                                   <tr className='text-center'>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
-                                      <p class="whitespace-no-wrap">{item.gameId}</p>
+                                      <div class="whitespace-no-wrap">{item.gameId}</div>
                                     </td>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
                                       <div class="d-flex align-items-center">
@@ -165,7 +165,7 @@ const FriendsPageNew = () => {
                                       </div>
                                     </td>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
-                                      <p class="whitespace-no-wrap">{item.gameId}</p>
+                                      <div class="whitespace-no-wrap">{item.gameId}</div>
                                     </td>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
                                         <span class={`rounded-full ${item.reqStatus=='Sent'?'bg-blue-200':'bg-yellow-200'} px-3 py-1 text-xs font-semibold ${item.reqStatus=='Sent'?'text-blue-900':'text-yellow-900'} `}>{item.reqStatus=='Send'?'Send':'Sent'}</span>
