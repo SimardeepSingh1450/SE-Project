@@ -109,3 +109,9 @@
   from, to { border-color: transparent }
   50% { border-color: orange; }
 }
+
+.game-room-input{
+    padding:8px;
+    border-radius: 10px;
+    width: 350px;
+}

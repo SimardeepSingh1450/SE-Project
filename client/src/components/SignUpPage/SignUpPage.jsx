@@ -8,8 +8,14 @@ import {HiMail} from 'react-icons/hi'
 import {RiLockPasswordFill} from 'react-icons/ri'
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+import {StreamChat} from 'stream-chat';
 
-const LoginPage = () => {
+const SignUpPage = () => {
+    const api_key = "jhw8xp9vt565";
+    const cookies = new Cookies();
+    const token = cookies.get('token');
+    const client = StreamChat.getInstance(api_key);
     const navigate = useNavigate();
 
     const [username,setUsername] = useState("");
@@ -17,6 +23,17 @@ const LoginPage = () => {
     const [pass,setPass] = useState("");
     const [promptMsg,setPromptMsg] = useState("");
     const [passPrompt,setPassPrompt] = useState(false);
+
+    if(token){
+      client.connectUser({
+        id:cookies.get('userId'),
+        name:cookies.get('username'),
+        hashedPassword:cookies.get('hashedPassword'),
+      },token).then((user)=>{
+        console.log('getStream Account User:',user)
+      })
+    }
+
     const signUpHandle=async()=>{
         if(username == ""){
           setPassPrompt(true);
@@ -49,6 +66,14 @@ const LoginPage = () => {
           setPassPrompt(true);
           setPromptMsg("Successfully Signed Up");
         }
+
+        //Now Setting up cookies for GetSTream.io
+        cookies.set("token",res.data.token);
+        cookies.set("username",res.data.user.username);
+        cookies.set("password",res.data.hashedPassword);
+        cookies.set("userId",res.data.userId);
+
+        //Flow then goes from here to dashboard on login where we connect the user to getstream
     }
 
   return (
@@ -110,4 +135,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default SignUpPage
