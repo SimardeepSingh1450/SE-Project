@@ -1,4 +1,4 @@
-import {Check} from 'react-bootstrap-icons';
+
 
 export default function NotificationList({randomPerson,friendsList})
 {
