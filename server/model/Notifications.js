@@ -5,11 +5,11 @@ var objId = Schema.ObjectId;
 const notificationsSchema = new mongoose.Schema({
     senderID:{
         required:true,
-        type: objId
+        type: String
     },
     receiverID:{
         required:true,
-        type: objId
+        type: String
     },
     status:{
         type:String

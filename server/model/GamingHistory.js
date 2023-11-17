@@ -5,15 +5,15 @@ var objId = Schema.ObjectId;
 const gameHistorySchema = new mongoose.Schema({
     playerID:{
         required:true,
-        type: objId
+        type: String
     },
     loserID:{
         required:true,
-        type: objId
+        type: String
     },
     winnerID:{
         required:true,
-        type: objId
+        type: String
     },
     gameStatus:{
         type:String

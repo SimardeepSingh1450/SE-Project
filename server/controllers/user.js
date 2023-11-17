@@ -41,7 +41,7 @@ async function handleUserSignUp(req,res){
     //and also add this user to friendsModel
     const newFriendList = new friendsModel({
         username:username,
-        playerID: user._id,//putting the playerID as it's current mongoose model ID
+        playerID: newUserID,//putting the playerID as it's current mongoose model ID
         friendsID:[]
     });
 
@@ -49,7 +49,7 @@ async function handleUserSignUp(req,res){
 
     //Adding user inside playerStatsDB
     const stats = new playerStatsModel({
-        playerID:user._id,
+        playerID:newUserID,
         wins:0,
         losses:0,
         gamesPlayed:0

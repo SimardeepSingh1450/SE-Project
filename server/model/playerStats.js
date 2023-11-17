@@ -5,7 +5,7 @@ var objId = Schema.ObjectId;
 const playerStatsSchema = new mongoose.Schema({
     playerID:{
         required:true,
-        type:objId
+        type:String
     },
     wins:{
         type:Number
@@ -15,7 +15,7 @@ const playerStatsSchema = new mongoose.Schema({
     },
     gamesPlayed:{
         type:Number
-    }
+    },
 });
 
 module.exports = mongoose.model('playerStatsSchema',playerStatsSchema);

@@ -3,7 +3,7 @@ import './GamePage.css'
 import {useState} from 'react';
 import Board from '../Board/Board';
 
-const GamePage = ({channel}) => {
+const GamePage = ({channel,setChannel}) => {
     const [result,setResult] = useState({winner:"none",state:"none"});
 
     // console.log('Channel in GamePage:',channel);
@@ -19,7 +19,7 @@ const GamePage = ({channel}) => {
 
   return (
     <div>
-        <Board result={result} setResult={setResult}/>
+        <Board setChannel={setChannel} result={result} setResult={setResult}/>
     </div>
   )
 }

@@ -60,7 +60,7 @@ export default function DashBoard() {
             <ButtonAppBar/>
 
             {
-                channel ? <Chat client={client}><Channel channel={channel}><GamePage channel={channel}/></Channel></Chat>:<div className='main-dashbard'>
+                channel ? <Chat client={client}><Channel channel={channel}><GamePage setChannel={setChannel} channel={channel}/></Channel></Chat>:<div className='main-dashbard'>
                 <div className='title'>Start Game</div>
                 <TicTacToe className='tictactoe'/>
                 <div className='button-container'>

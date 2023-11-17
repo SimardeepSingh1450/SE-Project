@@ -10,7 +10,7 @@ const fetchGamingHistory = async(req,res)=>{
 }
 
 const updateGamingHistory = async(req,res)=>{
-    const {loserID,playerID,winType} = req.body;
+    const {loserID,playerID,winnerID,winType} = req.body;
     let d = Date(Date.now());
     // Converting the number of millisecond
     // in date string
@@ -31,7 +31,7 @@ const updateGamingHistory = async(req,res)=>{
         console.log('New history Doc is:',newHistoryDoc);
 
         return res.json({HistoryDoc:newHistoryDoc});
-    }else{//it is a win
+    }else if(winType==="win"){//it is a win
         const newHistoryDoc = new gamingHistoryModel({
             loserID:loserID,
             playerID:playerID,
@@ -45,6 +45,20 @@ const updateGamingHistory = async(req,res)=>{
         console.log('New history Doc is:',newHistoryDoc);
 
         return res.json({HistoryDoc:newHistoryDoc});
+    }else{//it is a tie
+        const newHistoryDoc = new gamingHistoryModel({
+            loserID:loserID,
+            playerID:playerID,
+            winnerID:winnerID,
+            gameStatus:"tie",
+            date:dateInString
+        });
+
+        //save this doc inside the game history DB
+        await newHistoryDoc.save();
+        console.log('New history Doc of player-1 is:',newHistoryDoc);
+
+        return res.json({HistoryDoc1:newHistoryDoc});
     }
 }
 

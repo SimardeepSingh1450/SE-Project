@@ -3,14 +3,19 @@ import Square from './Sqaure';
 import { useChannelStateContext,useChatContext } from 'stream-chat-react';
 import {Patterns} from './WinningPatterns';
 import './Board.css'
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
-const Board = ({result,setResult}) => {
+const Board = ({result,setResult,setChannel}) => {
     const [board,setBoard] = useState(["","","","","","","","",""]);
     const [player,setPlayer] = useState("X");
     const [turn,setTurn] = useState("X");
     const [matchEnded,setMatchEnded] = useState(false);
     const [winnerID,setWinnerID] = useState();
     const [looserID,setLooserID] = useState();
+    const [matchTied,setMatchTied] = useState(false);
+
+    const navigate = useNavigate();
 
 
     const {channel} = useChannelStateContext();
@@ -49,8 +54,8 @@ const Board = ({result,setResult}) => {
             setPlayer(currentPlayer);
             setTurn(currentPlayer);
 
-            // console.log('Event User:',event.user);
-            // console.log('UESRID CLIENT:',client);
+            console.log('Event User:',event.user);
+            console.log('UESRID CLIENT:',client);
             setWinnerID(event.user.id);
             setLooserID(client.user.id);
 
@@ -80,6 +85,10 @@ const Board = ({result,setResult}) => {
                 alert(`Game has Ended and winner is: ${board[currPattern[0]]}`);
                 setResult({winner:board[currPattern[0]],status:"Won"});
                 setMatchEnded(true);
+                //call the function for making api calls in db
+                if(board[currPattern[0]]==player){
+                    apiCallerFn();
+                }
             }
         })
     }
@@ -96,18 +105,51 @@ const Board = ({result,setResult}) => {
         if(filled){
             alert(`Game has Ended and it is a TIE`);
             setResult({winner:"none",state:"tie"});
-            setMatchEnded(true);
+            setMatchTied(true);
         }
     }
 
-    const handleExit = async() =>{
-        //check match ended or not
+    const exitButton = ()=>{
+        if(matchEnded){
+            //finally navigate to dashboard
+            navigate("/dashboard");
+        }
+    }
+
+    const apiCallerFn = async() =>{
+        console.log('Inside api-caller function');
 
         if(matchEnded){
             //the incremenet the wins of the winner and update gaming history of both the players, then navigate to dashboard screen
-        }else{
+            const res = await axios.post('http://localhost:3005/stats/win',{playerID:winnerID});
+            console.log('Msg after updating the stats of winner:',res.data);
             
+            //increment the loss of the looser
+            const res2 = await axios.post('http://localhost:3005/stats/loss',{playerID:looserID});
+            console.log('Msg after updating the stats of looser:',res2.data);
+
+            //now updating the gaming history of winner
+            const res3 = await axios.post('http://localhost:3005/history/updateHistory',{loserID:looserID,winnerID:winnerID,playerID:winnerID,winType:"win"});
+            console.log('Msg after updating gaming-history of winner :',res3.data);
+
+            //now updating the gaming history of looser
+            const res4 = await axios.post('http://localhost:3005/history/updateHistory',{loserID:looserID,winnerID:winnerID,playerID:looserID,winType:"loss"});
+            console.log('Msg after updating gaming-history of looser :',res4.data);
+
+            setChannel(false);
+            
+        }else if(matchTied){//it has to be a tie, hence tie increment
+            //increment tie count of both the players
+            const res1 = await axios.post('http://localhost:3005/stats/tie',{playerID:winnerID});
+            console.log('Msg after updating stats as tie of winner:',res1.data);
+
+            //now updating the gaming history
+            const res4 = await axios.post('http://localhost:3005/history/updateHistory',{loserID:looserID,playerID:looserID,winnerID:winnerID,winType:"tie"});
+            console.log('Msg after updating history as tie of looser :',res4.data);
+            
+            setChannel(false);
         }
+        
     }
 
   return (
@@ -141,7 +183,7 @@ const Board = ({result,setResult}) => {
         </div>
 
         <br/>
-      <button onClick={()=>{handleExit()}} className='game-exit-button'>Exit Lobby</button>
+      <button onClick={()=>{exitButton()}} className='game-exit-button'>Exit Lobby</button>
     </div>
   )
 }

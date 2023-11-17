@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import './SignUpPage.css'
 import {motion} from 'framer-motion';
 import LoginBg from '../LoginPage/assets/laser-beam-login.mp4'
@@ -7,9 +7,15 @@ import {FaUser} from 'react-icons/fa';
 import {HiMail} from 'react-icons/hi'
 import {RiLockPasswordFill} from 'react-icons/ri'
 import {useNavigate} from 'react-router-dom';
-import axios from 'axios';
+import Cookies from 'universal-cookie';
+import {StreamChat} from 'stream-chat';
+// import axios from 'axios';
 
 const LoginPage = () => {
+  const api_key = "jhw8xp9vt565";
+  const cookies = new Cookies();
+  const token = cookies.get('token');
+  const client = StreamChat.getInstance(api_key);
     const navigate = useNavigate();
 
     const [username,setUsername] = useState("");
@@ -17,6 +23,18 @@ const LoginPage = () => {
     const [pass,setPass] = useState("");
     const [promptMsg,setPromptMsg] = useState("");
     const [passPrompt,setPassPrompt] = useState(false);
+
+    if(token){
+            client.connectUser({
+              id:cookies.get('userId'),
+              name:cookies.get('username'),
+              hashedPassword:cookies.get('hashedPassword'),
+            },token).then((user)=>{
+              console.log('getStream Account User:',user)
+            })
+          }
+
+
     const signUpHandle=async()=>{
         if(username == ""){
           setPassPrompt(true);
@@ -40,16 +58,45 @@ const LoginPage = () => {
         }
 
         //Authentiation Handelling code
-        const res = await axios.post('http://localhost:3005/user/signup',{email:email,username:username,password:pass});
+        // const res = await axios.post('http://localhost:3005/user/signup',{email:email,username:username,password:pass});
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
 
-        if(!res.data.user){
+        const data = await fetch('http://localhost:3005/user/signup', {
+            method: 'POST',
+            redirect: 'follow',
+            credentials: 'include', // Don't forget to specify this if you need cookies
+            headers: headers,
+            body: JSON.stringify({email:email,username:username,password:pass})
+        })
+
+        const res = await data.json();
+        console.log('Data from signup fetch is :',res);
+
+        if(!res.user){
           setPassPrompt(true);
           setPromptMsg("Unsuccessfull Signup, Please Try Again");
         }else{
           setPassPrompt(true);
           setPromptMsg("Successfully Signed Up");
+
+          cookies.set("token",res.token);
+          cookies.set("username",res.user.username);
+          cookies.set("password",res.user.password);//this is hashed password
+          cookies.set("userId",res.userId);
         }
+
     }
+
+    useEffect(()=>{
+      cookies.remove('token');
+      const disUser = async()=>{
+        await client.disconnectUser();
+      }
+
+      disUser();
+    },[])
 
   return (
     <div className='mainLoginPageDiv'>

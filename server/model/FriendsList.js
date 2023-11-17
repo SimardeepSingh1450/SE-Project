@@ -9,11 +9,11 @@ const friendsSchema = new mongoose.Schema({
     },
     playerID:{
         required:true,
-        type: objId
+        type: String
     },
     friendsID:[{
         required: true,
-        type: objId
+        type: String
     }]
 });
 

@@ -19,17 +19,26 @@ const lossStatsUpdate = async(req,res) =>{
 const winStatsUpdate = async(req,res) =>{
     const {playerID} = req.body;
 
-    //searching this playerID inside stats-DB
-    const statDoc = await playerStatsModel.findOne({playerID:playerID});
+    try{
+        //searching this playerID inside stats-DB
+        const statDoc = await playerStatsModel.findOne({playerID:playerID});
 
-    //update the data as win
-    statDoc.wins = statDoc.wins + 1;
-    statDoc.gamesPlayed = statDoc.gamesPlayed + 1;
+        console.log('Found player:',statDoc);
 
-    //now saving the Doc-Data
-    await statDoc.save();
+        //update the data as win
+        statDoc.wins = statDoc.wins + 1;
+        statDoc.gamesPlayed = statDoc.gamesPlayed + 1;
 
-    return res.status(200).json({msg:'Player Stats updated succesfully',newStatDoc:statDoc});
+        //now saving the Doc-Data
+        await statDoc.save();
+    }catch(e){
+        console.log('Erro:',e);
+    }
+    
+
+    // return res.json({msg:'Player Stats updated succesfully',newStatDoc:statDoc});
+    console.log('playerID is:',playerID);
+    res.json({playerID});
 }
 
 const tieStatsUpdate = async(req,res) =>{
