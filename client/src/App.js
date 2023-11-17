@@ -7,13 +7,11 @@ import Notifications from './components/Notifications/Notifications';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/ProfilePage/profile';
 import FriendsPageNew from './components/FriendsPageNew/FriendsPage';
-import ButtonAppBar from './components/Navbar/navbar';
 import Leaderboard from './components/Leaderboard/leaderboard';
 
 function App() {
   return (
     <div className="App">
-      <ButtonAppBar />
       <Routes>
       <Route path="/dashboard" element={<Dashboard/>}/>
       <Route path="/loginPage" element={<LoginPage/>}/>

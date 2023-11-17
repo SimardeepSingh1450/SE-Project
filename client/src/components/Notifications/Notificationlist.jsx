@@ -1,5 +1,4 @@
 
-
 export default function NotificationList({randomPerson,friendsList})
 {
     return (

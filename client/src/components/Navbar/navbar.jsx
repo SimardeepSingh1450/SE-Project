@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './navbar.css';
 
 export default function ButtonAppBar() {
@@ -9,15 +9,15 @@ export default function ButtonAppBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-custom temp">
       <div className="d-flex align-items-center pl-5">
-        <div className="navbar-brand fw-bold"><NavLink to="/" style={linkStyle} id="heading">MP Game</NavLink></div>
-        <div className="nav-link ml-1"><NavLink to="dashboard" style={linkStyle} id='dash' className='links'>DashBoard</NavLink></div>
-        <div className="nav-link ml-5"><NavLink to="/profile" style={linkStyle} id='profile' className='links'>Profile</NavLink></div>
-        <div className="nav-link ml-5"><NavLink to="/notificationsPage" style={linkStyle} id='notifications' className='links'>Notifications</NavLink></div>
-        <div className="nav-link ml-5"><NavLink to="/friendsPageNew" style={linkStyle} id='friends' className='links'>Friends</NavLink></div>
-        <div className="nav-link ml-5"><NavLink to="/leaderboard" style={linkStyle} id='leaderboard' className='links'>Leaderboard</NavLink></div>
+        <div className="navbar-brand fw-bold"><Link to="/" style={linkStyle} id="heading">MP Game</Link></div>
+        <div className="nav-link ml-1"><Link to="/dashboard" style={linkStyle} id='dash' className='links'>DashBoard</Link></div>
+        <div className="nav-link ml-5"><Link to="/profile" style={linkStyle} id='profile' className='links'>Profile</Link></div>
+        <div className="nav-link ml-5"><Link to="/notificationsPage" style={linkStyle} id='notifications' className='links'>Notifications</Link></div>
+        <div className="nav-link ml-5"><Link to="/friendsPageNew" style={linkStyle} id='friends' className='links'>Friends</Link></div>
+        <div className="nav-link ml-5"><Link to="/leaderboard" style={linkStyle} id='leaderboard' className='links'>Leaderboard</Link></div>
       </div>
       <ul className="navbar-nav ml-auto mr-5">
-        <div className="nav-link "><NavLink to="/logout" style={linkStyle} id='logout'>Log Out</NavLink></div>
+        <div className="nav-link "><Link to="/logout" style={linkStyle} id='logout'>Log Out</Link></div>
       </ul>
       {/* <div className="container-fluid"> */}
         {/* <div className="navbar-brand fw-bold"><NavLink to="/" style={linkStyle}>MP Game</NavLink></div>

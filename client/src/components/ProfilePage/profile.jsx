@@ -7,6 +7,7 @@ import { useMemo, useState, useEffect } from 'react'
 import "./style.scss";
 import "bootstrap/dist/js/bootstrap.bundle.min"
 import './profile.css'
+import ButtonAppBar from '../Navbar/navbar';
 
 async function getData() {
     const user = {
@@ -89,6 +90,9 @@ export default function Profile() {
         <video playsInline autoPlay muted loop className='profile-background'>
             <source src={backgroundVideo} type="video/mp4"/>
         </video>
+
+        <ButtonAppBar/>
+        
 
         <div className='main-profile-div'>
         <div className="container pt-4 gap-3" id='container-blur'>

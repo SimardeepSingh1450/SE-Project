@@ -10,6 +10,7 @@ import {useNavigate} from 'react-router-dom';
 import GamePage from '../GamePage/GamePage'
 import {StreamChat} from 'stream-chat';
 import {Channel,Chat} from 'stream-chat-react';
+import ButtonAppBar from '../Navbar/navbar';
 
 export default function DashBoard() {
     const [opponentName,setOpponentName] = useState("");
@@ -55,6 +56,8 @@ export default function DashBoard() {
             <video playsInline autoPlay muted loop className='dashboard-background' id='myVideo'>
                 <source src={backgroundVideo} type="video/mp4"/>
             </video>
+            
+            <ButtonAppBar/>
 
             {
                 channel ? <Chat client={client}><Channel channel={channel}><GamePage channel={channel}/></Channel></Chat>:<div className='main-dashbard'>

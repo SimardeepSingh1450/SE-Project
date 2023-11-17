@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './FriendsPage.css'
 import randomPerson from './assets/random.jpeg'
+import ButtonAppBar from '../Navbar/navbar';
 
 const dummyData = [
   {gameId:1,userName:'Simardeep',Email:'simar9389@gmail.com',status:'Inactive',reqStatus:'Send'},
@@ -28,6 +29,7 @@ const FriendsPageNew = () => {
 
   return (
     <>
+        <ButtonAppBar/>
         <div className='bg-slate-800 mainFriendsPage'>
         <div className='ballOne rounded-full w-[70vh] h-[90vw] ml-[-20vw] mb-[-20vw] bg-pink-500 blur-3xl opacity-70'></div>
         <div className='ballTwo rounded-full w-[60vh] h-[80vw] mr-[-50vh] bg-blue-500 blur-3xl opacity-70'></div>
