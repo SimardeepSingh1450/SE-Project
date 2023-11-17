@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/ProfilePage/profile';
 import FriendsPageNew from './components/FriendsPageNew/FriendsPage';
 import ButtonAppBar from './components/Navbar/navbar';
+import Leaderboard from './components/Leaderboard/leaderboard';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/friendsPage" element={<FriendsPage/>}/>
       <Route path="/friendsPageNew" element={<FriendsPageNew/>}/>
       <Route path="/notificationsPage" element={<Notifications/>}/>
+      <Route path='/leaderboard' element={<Leaderboard />} />
       <Route path="/profile" element={<Profile/>}/>
       </Routes>
     </div>

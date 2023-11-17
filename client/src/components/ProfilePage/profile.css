@@ -87,6 +87,7 @@ body {
   -webkit-backdrop-filter: blur(25px);
   backdrop-filter: blur(25px);
   color: rgb(207, 207, 207);
+  text-shadow: 0 0 50px #ffffffc1;
   
 }
 

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
-
 .mainFriendsPage{
     display: flex;
     flex-direction: column;
@@ -15,24 +13,6 @@
     top: 0;
     left: 0;
     z-index: -1;
-}
-
-.notfound {
-    text-transform: uppercase;
-    font-family: 'Pixelify Sans', sans-serif;
-    color: white;
-    font-size: 75px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    animation: breathe infinite 1.5s;
-    /* text-shadow:
-    0 0 7px #ffffffc1,
-    0 0 10px #fb6225,
-    0 0 21px #fb6225,
-    0 0 42px #fb6225,
-    0 0 82px #fb6225; */
 }
 
 
@@ -191,30 +171,4 @@
     /* 0 0 21px #fbfb25, */
     0 0 42px #fbfb25;
     /* 0 0 82px #fbfb25; */
-}
-
-
-
-@keyframes breathe {
-    0% {
-        text-shadow:
-    0 0 7px #ffffffc1,
-    0 0 10px #ff0000,
-    0 0 21px #ff0000,
-    0 0 42px #ff0000,
-    0 0 82px #ff0000;
-    }
-
-    50% {
-        text-shadow: none;
-    }
-
-    100% {
-        text-shadow:
-    0 0 7px #ffffffc1,
-    0 0 10px #ff0000,
-    0 0 21px #ff0000,
-    0 0 42px #ff0000,
-    0 0 82px #ff0000;
-    }
 }

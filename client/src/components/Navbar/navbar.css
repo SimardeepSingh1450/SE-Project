@@ -23,7 +23,7 @@
 }
 
 
-#dash {
+#friends {
     text-shadow:
     0 0 7px #ffffffc1,
     0 0 10px #0fa,
@@ -51,7 +51,7 @@
     0 0 82px #fff205;
     transition: all 0.1s ease-in-out;
 }
-#friends {
+#dash {
     text-shadow:
     /* 0 0 7px #ffffffc1, */
     0 0 10px #ffa500,
@@ -71,13 +71,23 @@
     transition: all 0.1s ease-in-out;
 }
 
+#leaderboard{
+    text-shadow:
+    /* 0 0 7px #ffffffc1, */
+    0 0 10px #F0D9E7,
+    0 0 21px #F0D9E7,
+    0 0 42px #F0D9E7,
+    0 0 82px #F0D9E7;
+    transition: all 0.1s ease-in-out;
+}
+
 
 @keyframes blink-caret {
     from, to { border-color: transparent }
     50% { border-color: orange; }
   }
 
-#dash:hover, #profile:hover, #notifications:hover, #friends:hover, #logout:hover {
+#dash:hover, #profile:hover, #notifications:hover, #friends:hover, #logout:hover, #leaderboard:hover {
     text-shadow:
     0 0 7px #ffffffc1,
     0 0 10px #FB2576,
