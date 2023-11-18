@@ -19,7 +19,7 @@ body {
 }
 
 .main-profile-div {
-  overflow: scroll;
+  /* overflow:auto; */
   height: 93.2vh;
 }
 
