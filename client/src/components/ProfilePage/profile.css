@@ -20,8 +20,31 @@ body {
 
 .main-profile-div {
   /* overflow:auto; */
-  height: 93.2vh;
+  height: 92vh;
+  /* border-style: solid; */
+  /* border-width: 20px; */
+  /* border-radius: 10px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+#container-blur {
+  -webkit-backdrop-filter: blur(25px);
+  backdrop-filter: blur(25px);
+  color: rgb(207, 207, 207);
+  text-shadow: 0 0 50px #ffffffc1;
+  height: 83vh;
+  border-style: solid;
+  border-width: 1px;
+  border-color: none;
+  border-radius: 50px;
+  padding-right: 5vh;
+  padding-left: 5vh;
+  padding-bottom: 5vh;
+  padding-top: 10vh;
+}
+
 
 /* .profile-pic-container {
   width: 100%;
@@ -78,18 +101,11 @@ body {
   overflow:scroll;
 
 }
-
+ 
 /* #container-blur {
   position: relative;
-} */
-
-#container-blur {
-  -webkit-backdrop-filter: blur(25px);
-  backdrop-filter: blur(25px);
-  color: rgb(207, 207, 207);
-  text-shadow: 0 0 50px #ffffffc1;
-  
-}
+} 
+*/
 
 /* .container-blur::before {
   content: "";
@@ -142,7 +158,7 @@ body {
   padding: 1em 1em;
   border-bottom: 1px solid rgba(152, 152, 152, 0.433);
   transition: all 0.1s ease-in-out;
-
+  border-radius: 1em;
 }
 
 .friends-list-profile-page:hover {

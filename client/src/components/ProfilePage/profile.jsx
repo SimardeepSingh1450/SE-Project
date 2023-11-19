@@ -22,13 +22,13 @@ async function getData() {
     const temp = await fetch('https://randomuser.me/api/?inc=name,picture,location&results=30')
     const data = await temp.json()
     let data5 = data.results;
-    if (data5.length <5)
+    if (data5.length <3)
     {
         data5 = data5.slice(0,data5.length)
     }
     else
     {
-        data5 = data5.slice(0,5)
+        data5 = data5.slice(0,3)
     }
     const friends = data5;
 
@@ -53,11 +53,11 @@ async function getData() {
             status: 'win',
             datePlayed: '24 Sept, 2023'
         },
-        {
-            name: 'singla',
-            status: 'win',
-            datePlayed: '24 Sept, 2023'
-        },
+        // {
+        //     name: 'singla',
+        //     status: 'win',
+        //     datePlayed: '24 Sept, 2023'
+        // },
     ]
 
     return {user, friends, games}
@@ -100,7 +100,7 @@ export default function Profile() {
             <div className="row pb-5">
                 <div className="col-3 d-flex justify-content-center " id='ongabunga'>
                     <div className='profile-pic-container'></div>
-                        <img src="https://avatars.akamai.steamstatic.com/a2206a6601be3c539e00d8b4090512767462a190_full.jpg" className="profile-pic img-fluid"/>
+                        <img src="https://res.cloudinary.com/dv7jje0bw/image/upload/v1700427015/Software-Engineering-MP-Game/gamelogo_qeq6xq.jpg" className="profile-pic img-fluid"/>
     
                 </div>
                 <div className="col-5">
