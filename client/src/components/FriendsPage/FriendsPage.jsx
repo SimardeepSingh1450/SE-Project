@@ -145,11 +145,11 @@ const FriendsPage = () => {
                               return (
                                   <tr>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
-                                      <div class="flex items-center">
+                                      <div class="flex items-center ml-10">
                                         <div class="h-10 w-10 flex-shrink-0">
                                           <img class="h-full w-full rounded-full" src={randomPerson} alt="" />
                                         </div>
-                                        <div class="ml-3">
+                                        <div class="ml-5">
                                           <p class="whitespace-no-wrap">{item.userName}</p>
                                         </div>
                                       </div>

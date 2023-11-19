@@ -157,8 +157,8 @@ const FriendsPageNew = () => {
                               return (
                                   <tr className='text-center'>
                                     <td className="border-b border-gray-200 bg-none px-5 py-5 text-s">
-                                      <div className="d-flex align-items-center">
-                                        <div className="h-10 w-10 flex-shrink-0">
+                                      <div className="d-flex align-items-center ml-8">
+                                        <div className="h-10 w-10 flex-shrink-0 ml-8">
                                           <img className="h-full w-full rounded-full" src={randomPerson} alt="" />
                                         </div>
                                         <div className="ml-3">
