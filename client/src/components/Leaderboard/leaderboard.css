@@ -160,6 +160,29 @@
     /* 0 0 82px #25fb82; */
 }
 
+.first:hover{
+    cursor: pointer;
+    animation: hoverAnimationOne 0.5s ease-in-out infinite;
+}
+
+@keyframes hoverAnimationOne{
+    0%{
+        box-shadow: 
+        0 0 0px #ffffffc1,
+        0 0 0px #25fb82;
+    }
+    50%{
+        box-shadow: 
+    0 0 20px #ffffffc1,
+    0 0 62px #25fb82;
+    }
+    0%{
+        box-shadow: 
+        0 0 0px #ffffffc1,
+        0 0 0px #25fb82;
+    }
+}
+
 .second {
     /* text-shadow:
     0 0 7px #ffffffc1,
@@ -174,4 +197,27 @@
     /* 0 0 21px #fbfb25, */
     0 0 42px #fbfb25;
     /* 0 0 82px #fbfb25; */
+}
+
+.second:hover{
+    cursor: pointer;
+    animation: hoverAnimationTwo 0.5s ease-in-out infinite;
+}
+
+@keyframes hoverAnimationTwo{
+    0%{
+        box-shadow: 
+        0 0 0px #ffffffc1,
+        0 0 0px #fbfb25;
+    }
+    50%{
+        box-shadow: 
+    0 0 20px #ffffffc1,
+    0 0 62px #fbfb25;
+    }
+    0%{
+        box-shadow: 
+        0 0 0px #ffffffc1,
+        0 0 0px #fbfb25;
+    }
 }

@@ -4,6 +4,7 @@ import randomPerson from './assets/random.jpeg'
 import NotificationList from './Notificationlist'
 import NotFound from './notfound'
 import ButtonAppBar from '../Navbar/navbar';
+import ParticlesBg from 'particles-bg';
 
 
 const dummyData = [
@@ -33,10 +34,7 @@ const Notifications = () => {
   return (
     <>
         <ButtonAppBar/>
-        <div className='bg-slate-800 mainFriendsPage'>
-        <div className='ballOne rounded-full w-[70vh] h-[90vw] ml-[-20vw] mb-[-20vw] bg-yellow-100 blur-3xl opacity-70'></div>
-        <div className='ballTwo rounded-full w-[60vh] h-[80vw] mr-[-50vh] bg-pink-500 blur-3xl opacity-70'></div>
-        </div>
+        <ParticlesBg type="lines" bg={true} />
 
         <div className='pt-5 full-container'>
             <div class="">

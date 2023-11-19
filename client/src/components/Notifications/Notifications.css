@@ -55,12 +55,14 @@
 
 .ballOne{
     position: relative;
-    animation: ballOneAnimate 0.2s ease-in-out infinite;
+    animation: ballOneAnimate 5s ease-in-out infinite;
+    background-color: rgb(255, 0, 140);
 }
 
 .ballTwo{
     position: relative;
-    animation: ballTwoAnimate 0.2s ease-in-out infinite;
+    animation: ballTwoAnimate 5s ease-in-out infinite;
+    background-color: rgb(0, 4, 255);
 }
 
 @keyframes ballOneAnimate {

@@ -31,8 +31,8 @@ const Leaderboard = () => {
     <>
         <ButtonAppBar/>
         <div className='bg-slate-800 mainFriendsPage'>
-        <div className='ballOne rounded-full w-[70vh] h-[90vw] ml-[-20vw] mb-[-20vw] bg-pink-500 blur-3xl opacity-70'></div>
-        <div className='ballTwo rounded-full w-[60vh] h-[80vw] mr-[-50vh] bg-blue-500 blur-3xl opacity-70'></div>
+        {/* <div className='ballOne rounded-full w-[70vh] h-[90vw] ml-[-20vw] mb-[-20vw] bg-pink-500 blur-3xl opacity-70'></div>
+        <div className='ballTwo rounded-full w-[60vh] h-[80vw] mr-[-50vh] bg-blue-500 blur-3xl opacity-70'></div> */}
         </div>
 
         <div className='pt-5 full-container'>
@@ -72,12 +72,12 @@ const Leaderboard = () => {
                             friendsList.map((item,indx)=>{
                               return (
                                   <tr className='text-center'>
-                                  <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
+                                  <td class="border-b border-gray-200 bg-none px-5 py-5 text-xl">
                                       <div class="whitespace-no-wrap">{indx + 1}</div>
                                     </td>
                                     <td className="border-b border-gray-200 bg-none px-5 py-5 ">
                                       <div className="d-flex align-items-center">
-                                        <div className="h-10 w-10 flex-shrink-0">
+                                        <div className="ml-5 h-10 w-10 flex-shrink-0">
                                           <img className="h-full w-full rounded-full" src={randomPerson} alt="" />
                                         </div>
                                         <div className="ml-3">
@@ -85,10 +85,10 @@ const Leaderboard = () => {
                                         </div>
                                       </div>
                                     </td>
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 align-items-center">
+                                    <td class="border-b border-gray-200 bg-none px-5 py-5 align-items-center text-xl">
                                       <div class="whitespace-no-wrap">{item.gameId}</div>
                                     </td>
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 align-items-center">
+                                    <td class="border-b border-gray-200 bg-none px-5 py-5 align-items-center text-xl">
                                         <div class={`${(indx%2) === 0 ? 'first' : 'second'}`} id='changew'>{item.wins}</div>
                                     </td>
                                 </tr>
