@@ -69,7 +69,7 @@ const FriendsPageNew = () => {
                     <div class="overflow-x-auto">
                       <table class="w-full">
                         <thead>
-                          <tr class="bg-black text-center text-xs font-semibold uppercase tracking-widest text-white">
+                          <tr class="bg-black text-center text-s font-semibold uppercase tracking-widest text-white">
                             <th class="px-5 py-3">GAME ID</th>
                             <th class="px-5 py-3">Username</th>
                             {/* <th class="px-5 py-3">Email</th> */}
@@ -83,10 +83,10 @@ const FriendsPageNew = () => {
                             friendsList.map((item)=>{
                               return (
                                   <tr className='text-center'>
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
+                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                       <div class="whitespace-no-wrap">{item.gameId}</div>
                                     </td>
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
+                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                       <div class="d-flex align-items-center">
                                         <div class="h-10 w-10 flex-shrink-0">
                                           <img class="h-full w-full rounded-full" src={randomPerson} alt="" />
@@ -99,7 +99,7 @@ const FriendsPageNew = () => {
                                     {/* <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
                                       <p class="whitespace-no-wrap">{item.Email}</p>
                                     </td> */}
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
+                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                       <span class={`rounded-full ${item.status=='Active'?'bg-green-200':'bg-red-200'} px-3 py-1 text-xs font-semibold ${item.status=='Active'?'text-green-900':'text-red-900'}`}>{item.status}</span>
                                     </td>
                                     <td class="px-6 py-4 border-b">
@@ -144,7 +144,7 @@ const FriendsPageNew = () => {
                     <div class="overflow-x-auto">
                       <table class="w-full">
                         <thead>
-                          <tr class="bg-black text-center text-xs font-semibold uppercase tracking-widest text-white">
+                          <tr class="bg-black text-center text-s font-semibold uppercase tracking-widest text-white">
                             <th class="px-5 py-3">Username</th>
                             <th class="px-5 py-3">Game ID</th>
                             <th class="px-5 py-3">Send Request</th>
@@ -156,7 +156,7 @@ const FriendsPageNew = () => {
                             friendsList.map((item)=>{
                               return (
                                   <tr className='text-center'>
-                                    <td className="border-b border-gray-200 bg-none px-5 py-5 text-sm">
+                                    <td className="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                       <div className="d-flex align-items-center">
                                         <div className="h-10 w-10 flex-shrink-0">
                                           <img className="h-full w-full rounded-full" src={randomPerson} alt="" />
@@ -166,10 +166,10 @@ const FriendsPageNew = () => {
                                         </div>
                                       </div>
                                     </td>
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
+                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                       <div class="whitespace-no-wrap">{item.gameId}</div>
                                     </td>
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
+                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                         <span class={`rounded-full ${item.reqStatus=='Sent'?'bg-blue-200':'bg-yellow-200'} px-3 py-1 text-xs font-semibold ${item.reqStatus=='Sent'?'text-blue-900':'text-yellow-900'} `}>{item.reqStatus=='Send'?'Send':'Sent'}</span>
                                     </td>
                                 </tr>
