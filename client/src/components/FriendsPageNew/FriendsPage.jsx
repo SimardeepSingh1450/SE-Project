@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './FriendsPage.css'
 import randomPerson from './assets/random.jpeg'
 import ButtonAppBar from '../Navbar/navbar';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const dummyData = [
   {gameId:1,userName:'Simardeep',Email:'simar9389@gmail.com',status:'Inactive',reqStatus:'Send'},
@@ -14,6 +16,8 @@ const dummyData = [
 const FriendsPageNew = () => {
   const [friendName,setFriendName] = useState('');
   const [friendsList,setFriendsList] = useState(dummyData);
+
+  const navigate = useNavigate();
   
   const handleSubmitClick=()=>{
       if(friendName != ''){
@@ -25,7 +29,20 @@ const FriendsPageNew = () => {
       }else{
         setFriendsList(dummyData);
       }
-  }  
+  }
+  
+  useEffect(()=>{
+    //Now we will check wether user is logged in by checking the loggedIn route
+    const checkFn = async()=>{
+        const res = await axios.get('http://localhost:3005/loggedIn',{withCredentials:true});
+        if(!res.data.loggedIn){
+            navigate("/loginPage");
+            console.log('Did not pass restrictToLoginUsers code :',res.data);
+        }
+    }
+
+    checkFn();
+},[]);
 
   return (
     <>

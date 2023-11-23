@@ -1,11 +1,26 @@
 import { Link } from "react-router-dom";
 import './navbar.css';
+import Cookies from 'universal-cookie'
+import {StreamChat} from 'stream-chat';
+
+const cookies = new Cookies();
 
 export default function ButtonAppBar() {
   const linkStyle = {
     textDecoration: 'none',
     color: 'white',
   }
+
+  const api_key = "jhw8xp9vt565";
+  const cookies = new Cookies();
+  const client = StreamChat.getInstance(api_key);
+
+  const logOutHandle = async() =>{
+    await client.disconnectUser();
+    cookies.remove("uid");
+    cookies.remove("userId");
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-custom temp">
       <div className="d-flex align-items-center pl-5">
@@ -17,7 +32,7 @@ export default function ButtonAppBar() {
         <div className="nav-link ml-5"><Link to="/leaderboard" style={linkStyle} id='leaderboard' className='links'>Leaderboard</Link></div>
       </div>
       <ul className="navbar-nav ml-auto mr-5">
-        <div className="nav-link "><Link to="/logout" style={linkStyle} id='logout'>Log Out</Link></div>
+        <div onClick={()=>{logOutHandle()}} className="nav-link "><Link to="/loginPage" style={linkStyle} id='logout'>Log Out</Link></div>
       </ul>
       {/* <div className="container-fluid"> */}
         {/* <div className="navbar-brand fw-bold"><NavLink to="/" style={linkStyle}>MP Game</NavLink></div>
