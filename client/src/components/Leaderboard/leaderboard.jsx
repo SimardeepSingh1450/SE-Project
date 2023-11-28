@@ -18,11 +18,13 @@ const Leaderboard = () => {
   const handleSubmitClick=()=>{
       if(friendName != ''){
         const results = friendsList.filter((item)=>{
-          return item.userName.toLowerCase().startsWith(friendName.toLowerCase());
+          return (item.playerUsername!=null && item.playerUsername.toLowerCase().startsWith(friendName.toLowerCase()));
         });
         //Setting the new Filtered out Data in the State
         setFriendsList(results);
       }else{
+        //fetch friends list
+        fetchLeaderBoard();
         setFriendsList(friendsList);
       }
   } 
@@ -74,7 +76,7 @@ const Leaderboard = () => {
                                 </svg>
                             </div> */}
                             <input onChange={(e)=>setFriendName(e.target.value)} type="search" id="default-search" class="max-w-full w-[400px] block p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Leaderboard" required/>
-                            <button onClick={()=>{handleSubmitClick()}} type="submit" class="btn btn-primary" id='search-btn'>Search</button>
+                            <button onClick={()=>{handleSubmitClick()}} type="submit" class="btn btn-primary" id='search-btn'>Search/ViewAll</button>
                         </div>
                     </div>
 
