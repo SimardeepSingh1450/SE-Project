@@ -1,23 +1,47 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect} from 'react'
 import './FriendsPage.css'
 import randomPerson from './assets/random.jpeg'
 import ButtonAppBar from '../Navbar/navbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const dummyData = [
-  {gameId:1,userName:'Simardeep',Email:'simar9389@gmail.com',status:'Inactive',reqStatus:'Send'},
-  {gameId:2,userName:'Jaiver',Email:'jaiveer@gmail.com',status:'Active',reqStatus:'Send'},
-  {gameId:3,userName:'ArshGoyal',Email:'arshgoyal@gmail.com',status:'Inactive',reqStatus:'Sent'},
-  {gameId:4,userName:'Sukhraj',Email:'sukhraj2311@gmail.com',status:'Inactive',reqStatus:'Send'},
-  {gameId:5,userName:'Jaskaran',Email:'jaskaran@gmail.com',status:'Active',reqStatus:'Sent'}
+  {friendID:1,friendUsername:'Simardeep',Email:'simar9389@gmail.com',status:'Inactive',reqStatus:'Send'},
+  {friendID:2,friendUsername:'Jaiver',Email:'jaiveer@gmail.com',status:'Active',reqStatus:'Send'},
+  {friendID:3,friendUsername:'ArshGoyal',Email:'arshgoyal@gmail.com',status:'Inactive',reqStatus:'Sent'},
+  {friendID:4,friendUsername:'Sukhraj',Email:'sukhraj2311@gmail.com',status:'Inactive',reqStatus:'Send'},
+  {friendID:5,friendUsername:'Jaskaran',Email:'jaskaran@gmail.com',status:'Active',reqStatus:'Sent'}
 ]
 
 const FriendsPageNew = () => {
   const [friendName,setFriendName] = useState('');
   const [friendsList,setFriendsList] = useState(dummyData);
-
+  const [notFriends,setNotFriends] = useState([]);
+  
+  const cookies = new Cookies();
+  const playerID = cookies.get("userId");
+  const senderUsername = cookies.get("username");
   const navigate = useNavigate();
+
+  //fetching all users which are not friends of this user
+  const fetchNotFriends = async()=>{
+    var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+
+        const data = await fetch('http://localhost:3005/friends/fetchNotFriends', {
+            method: 'POST',
+            redirect: 'follow',
+            credentials: 'include', // Don't forget to specify this if you need cookies
+            headers: headers,
+            body: JSON.stringify({playerID:playerID})
+        })
+
+
+        const res = await data.json();
+        setNotFriends(res.result);
+  }
   
   const handleSubmitClick=()=>{
       if(friendName != ''){
@@ -30,18 +54,88 @@ const FriendsPageNew = () => {
         setFriendsList(dummyData);
       }
   }
-  
-  useEffect(()=>{
-    //Now we will check wether user is logged in by checking the loggedIn route
-    const checkFn = async()=>{
-        const res = await axios.get('http://localhost:3005/loggedIn',{withCredentials:true});
-        if(!res.data.loggedIn){
-            navigate("/loginPage");
-            console.log('Did not pass restrictToLoginUsers code :',res.data);
-        }
-    }
 
+  //fetching my friends list
+  const fetchFriendsFn = async()=>{
+    // console.log('player id is :',playerID);
+    // const friendsList = await axios.get('http://localhost:3005/friends/fetchFriends',{playerID:playerID});
+    // console.log('friends list from backend:',friendsList);
+
+    var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
+      const data = await fetch('http://localhost:3005/friends/fetchFriends', {
+          method: 'POST',
+          redirect: 'follow',
+          credentials: 'include', // Don't forget to specify this if you need cookies
+          headers: headers,
+          body: JSON.stringify({playerID:playerID})
+      })
+
+
+      const res = await data.json();
+      setFriendsList(res.friendsList);
+  }
+
+  //Now we will check wether user is logged in by checking the loggedIn route
+  const checkFn = async()=>{
+    const res = await axios.get('http://localhost:3005/loggedIn',{withCredentials:true});
+    if(!res.data.loggedIn){
+        navigate("/loginPage");
+        console.log('Did not pass restrictToLoginUsers code :',res.data);
+    }
+  }
+
+  //Handle-Send-Button
+  const handleSendButton = async(otherPersonID,item) =>{
+    // console.log('Inside handle send button')
+    //add the person to friends list of this user and put status as pending 
+    // const res = await axios.post('http://localhost:3005/friends/addFriend',{friendID:otherPersonID,friendUsername:item.username,playerID:playerID,status:"pending"});
+    // console.log(res.data);
+
+    var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
+      const data = await fetch('http://localhost:3005/friends/addFriend', {
+          method: 'POST',
+          redirect: 'follow',
+          credentials: 'include', // Don't forget to specify this if you need cookies
+          headers: headers,
+          body: JSON.stringify({friendID:otherPersonID,friendUsername:item.username,playerID:playerID,status:"pending"})
+      })
+
+
+      const res = await data.json();
+      // console.log(res);
+
+    //refetch fetchnotfriends()
+    fetchNotFriends();
+
+    //send the notification to the friendUser
+    var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
+      const data2 = await fetch('http://localhost:3005/notifications/sendNotification', {
+          method: 'POST',
+          redirect: 'follow',
+          credentials: 'include', // Don't forget to specify this if you need cookies
+          headers: headers,
+          body: JSON.stringify({senderID:playerID,receiverID:otherPersonID,senderUsername})
+      })
+
+      const res2 = await data2.json();
+      console.log('Sent notification');
+  }
+
+
+  useEffect(()=>{
     checkFn();
+    fetchFriendsFn();
+    fetchNotFriends();
+
 },[]);
 
   return (
@@ -87,44 +181,46 @@ const FriendsPageNew = () => {
                       <table class="w-full">
                         <thead>
                           <tr class="bg-black text-center text-s font-semibold uppercase tracking-widest text-white">
+                          <th class="px-5 py-3">Username</th>
                             <th class="px-5 py-3">GAME ID</th>
-                            <th class="px-5 py-3">Username</th>
                             {/* <th class="px-5 py-3">Email</th> */}
-                            <th class="px-5 py-3">Status</th>
+                            {/* <th class="px-5 py-3">Status</th> */}
                             <th class="px-5 py-3">Remove Friend</th>
                           </tr>
                         </thead>
 
                         <tbody class="text-white">
                           {
-                            friendsList.map((item)=>{
+                            friendsList?friendsList.map((item)=>{
                               return (
                                   <tr className='text-center'>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
-                                      <div class="whitespace-no-wrap">{item.gameId}</div>
-                                    </td>
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                       <div class="d-flex align-items-center">
-                                        <div class="h-10 w-10 flex-shrink-0">
+                                        <div class="h-10 w-10 flex-shrink-0 ml-5">
                                           <img class="h-full w-full rounded-full" src={randomPerson} alt="" />
                                         </div>
                                         <div class="ml-3">
-                                          <div class="">{item.userName}</div>
+                                          <div class="">{item.friendUsername}</div>
                                         </div>
                                       </div>
+                                    </td>
+                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
+                                      <div class="whitespace-no-wrap">{item.friendID}</div>
                                     </td>
                                     {/* <td class="border-b border-gray-200 bg-none px-5 py-5 text-sm">
                                       <p class="whitespace-no-wrap">{item.Email}</p>
                                     </td> */}
-                                    <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
+                                    {/* <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                       <span class={`rounded-full ${item.status=='Active'?'bg-green-200':'bg-red-200'} px-3 py-1 text-xs font-semibold ${item.status=='Active'?'text-green-900':'text-red-900'}`}>{item.status}</span>
-                                    </td>
+                                    </td> */}
                                     <td class="px-6 py-4 border-b">
-                                        <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                                        <span href="#" class="rounded-full text-red-900 bg-red-200 px-3 py-1 text-base font-semibold cursor-pointer">Remove</span>
                                     </td>
                                 </tr>
                               )
-                            })
+                            }
+                            
+                            ):(<></>)
                           }
 
                         </tbody>
@@ -170,24 +266,24 @@ const FriendsPageNew = () => {
 
                         <tbody class="text-white">
                           {
-                            friendsList.map((item)=>{
+                            notFriends.map((item)=>{
                               return (
                                   <tr className='text-center'>
                                     <td className="border-b border-gray-200 bg-none px-5 py-5 text-s">
                                       <div className="d-flex align-items-center ml-8">
-                                        <div className="h-10 w-10 flex-shrink-0 ml-8">
+                                        <div className="h-10 w-10 flex-shrink-0 ml-8 mr-2">
                                           <img className="h-full w-full rounded-full" src={randomPerson} alt="" />
                                         </div>
                                         <div className="ml-3">
-                                          <div className="">{item.userName}</div>
+                                          <div className="">{item.username}</div>
                                         </div>
                                       </div>
                                     </td>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
-                                      <div class="whitespace-no-wrap">{item.gameId}</div>
+                                      <div class="whitespace-no-wrap">{item.PlayerID}</div>
                                     </td>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 text-s">
-                                        <span class={`rounded-full ${item.reqStatus=='Sent'?'bg-blue-200':'bg-yellow-200'} px-3 py-1 text-xs font-semibold ${item.reqStatus=='Sent'?'text-blue-900':'text-yellow-900'} `}>{item.reqStatus=='Send'?'Send':'Sent'}</span>
+                                        <button onClick={()=>{handleSendButton(item.PlayerID,item)}} class={`cursor-pointer rounded-full bg-blue-200 px-3 py-1 text-base font-semibold text-blue-900`}>Send</button>
                                     </td>
                                 </tr>
                               )

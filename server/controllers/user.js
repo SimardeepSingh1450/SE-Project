@@ -42,7 +42,7 @@ async function handleUserSignUp(req,res){
     const newFriendList = new friendsModel({
         username:username,
         playerID: newUserID,//putting the playerID as it's current mongoose model ID
-        friendsID:[]
+        friendsList:[]
     });
 
     await newFriendList.save();

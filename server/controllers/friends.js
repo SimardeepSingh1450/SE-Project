@@ -1,22 +1,18 @@
 const friendsModel = require('../model/FriendsList');
+const usersModel = require('../model/UserProfile');
 
 const addFriend = async(req,res)=>{
-    const {friendID,playerID} = req.body;
+    const {friendID,friendUsername,playerID,status} = req.body;
 
     //finding the player's friends array
     const result = await friendsModel.findOne({playerID:playerID});
     console.log(result);
 
-    //adding new friend to the players friends array
-    if(result.friendsID.length == 0){
-        result.friendsID = [];
-    }
-
-    result.friendsID.push(friendID);
+    result.friendsList.push({friendUsername,friendID,status});
 
     await result.save();
 
-    return res.json({msg:`Added a NEW Friend with FriendID: ${friendID}`});
+    return res.json({msg:`Added a NEW Friend with FriendID: ${friendID} and ${status}`});
 }
 
 const deleteFriend = async(req,res)=>{
@@ -43,4 +39,45 @@ const deleteFriend = async(req,res)=>{
     res.json({msg:`Deleted the friend with ID: ${friendID}`});
 }
 
-module.exports = {addFriend,deleteFriend};
+const fetchFriends = async(req,res)=>{
+    const {playerID} = req.body;
+    const arrayOfFriends = await friendsModel.find({playerID:playerID,'friendsList.status':"friend"});
+
+    console.log(`fetching friends for ${playerID}`);
+
+    if(!arrayOfFriends[0]){
+        return res.json({friendsList:[]});
+    }
+
+    return res.json({friendsList:arrayOfFriends[0].friendsList});
+}
+
+const fetchNotFriends = async(req,res)=>{
+    const {playerID} = req.body;
+    const friends = await friendsModel.findOne({playerID:playerID});
+    const allPeople = await usersModel.find({});
+
+    if(!friends) return res.json({result:allPeople});
+
+    const currFriendsList = friends.friendsList; 
+
+    //map for storing friends
+    const frnds = new Map();
+    frnds.set(playerID,"1");
+
+    for(let i=0;i<currFriendsList.length;i++){
+        frnds.set(currFriendsList[i].friendID,"1");
+    }
+
+    const result=[];
+    //storing not marked ones inside the result
+    for(let i=0;i<allPeople.length;i++){
+        if(!frnds.get(allPeople[i].PlayerID)){
+            result.push(allPeople[i]);
+        }
+    }
+
+    return res.json({result:result});
+}
+
+module.exports = {addFriend,deleteFriend,fetchFriends,fetchNotFriends};

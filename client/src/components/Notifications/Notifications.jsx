@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './Notifications.css'
 import randomPerson from './assets/random.jpeg'
 import NotificationList from './Notificationlist'
 import NotFound from './notfound'
 import ButtonAppBar from '../Navbar/navbar';
 import ParticlesBg from 'particles-bg';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 
 const dummyData = [
@@ -15,21 +18,37 @@ const dummyData = [
   {gameId:5,userName:'Jaskaran',Email:'jaskaran@gmail.com',status:'Active',reqStatus:'Sent',wins:'5'}
 ]
 
+
 const Notifications = () => {
   const [friendName,setFriendName] = useState('');
   const [friendsList,setFriendsList] = useState([]);
-  
-  const handleSubmitClick=()=>{
-      if(friendName != ''){
-        const results = dummyData.filter((item)=>{
-          return item.userName.toLowerCase().startsWith(friendName.toLowerCase());
-        });
-        //Setting the new Filtered out Data in the State
-        setFriendsList(results);
-      }else{
-        setFriendsList(dummyData);
-      }
-  }  
+
+  const cookies = new Cookies();
+  const playerID = cookies.get("userId");
+  const navigate = useNavigate();
+
+  //Now we will check wether user is logged in by checking the loggedIn route
+  const checkFn = async()=>{
+    const res = await axios.get('http://localhost:3005/loggedIn',{withCredentials:true});
+    if(!res.data.loggedIn){
+        navigate("/loginPage");
+        console.log('Did not pass restrictToLoginUsers code :',res.data);
+    }
+  }
+
+  const fetchNotifications = async() =>{
+    const res = await axios.post('http://localhost:3005/notifications/fetchNotifications',{playerID:playerID});
+    console.log('Fetched notifications array',res.data);
+    setFriendsList(res.data.notificationsArray);
+  }
+
+  useEffect(()=>{
+    checkFn();
+
+    //fetching the notifications list
+    fetchNotifications();
+  },[])
+
 
   return (
     <>
@@ -43,7 +62,7 @@ const Notifications = () => {
                         <h1 className='friendListHeader text-5xl font-sans text-white'>Notifications</h1>
                     </div>
 
-                    {friendsList.length === 0 ? <NotFound /> : <NotificationList friendsList={friendsList} randomPerson={randomPerson}/>}
+                    {friendsList.length === 0 ? <NotFound /> : <NotificationList fetchNotifications={fetchNotifications} friendsList={friendsList} randomPerson={randomPerson}/>}
           
                 </div>
                 

@@ -1,5 +1,6 @@
 const notificationsModel = require('../model/Notifications');
 const userModel = require('../model/UserProfile');
+const friendsModel = require('../model/FriendsList');
 
 const fetcNotifications = async(req,res) =>{
     const {playerID} = req.body;
@@ -34,11 +35,12 @@ const checkIfNotificationSent = async(req,res) =>{
 }
 
 const sendNotification = async(req,res) =>{
-    const {senderID,receiverID} = req.body;
+    const {senderID,receiverID,senderUsername} = req.body;
 
     const newDoc = new notificationsModel({
         senderID:senderID,
         receiverID:receiverID,
+        senderUsername:senderUsername,
         status:"sent"
     });
 
@@ -71,4 +73,26 @@ const notificationSendablePlayers = async(req,res) =>{//those who are not having
     return res.json({result:newResult});
 }
 
-module.exports = {fetcNotifications,deleteNotificaion,checkIfNotificationSent,sendNotification,notificationSendablePlayers};
+const acceptNotification =async(req,res)=>{
+    //add this notification-sender to the friendList of the accepter playerID
+    const {senderUsername,senderID,playerID,receiverUsername} = req.body;
+
+    //delete the friend pending-status of the sender
+    const usr = await friendsModel.findOne({playerID:senderID,'friendsList.friendID':playerID,'friendsList.status':"pending"});
+    // console.log('FOUND:',usr);
+    // console.log('Friends List:',usr.friendsList);
+    
+    //update the status from pending to friend
+    usr.friendsList[0].status = "friend";
+    await usr.save();
+
+    //now adding the sender as friend of the currentPlayer who is accpeting the notification
+    const usr2 = await friendsModel.findOne({playerID:playerID});
+    usr2.friendsList.push({friendUsername:senderUsername,friendID:senderID,status:"friend"});
+
+    await usr2.save();
+
+    return res.json({usr1:usr,usr2:usr2});
+}
+
+module.exports = {fetcNotifications,deleteNotificaion,checkIfNotificationSent,sendNotification,notificationSendablePlayers,acceptNotification};

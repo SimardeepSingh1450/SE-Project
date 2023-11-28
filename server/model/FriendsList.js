@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var objId = Schema.ObjectId;
+
+const friendsListSchema = new mongoose.Schema({
+    friendUsername:{type:String},
+    friendID:{type:String},//GAME ID
+    status:{type:String}//Send/Sent Request`
+})
 
 const friendsSchema = new mongoose.Schema({
     username:{
@@ -11,10 +15,7 @@ const friendsSchema = new mongoose.Schema({
         required:true,
         type: String
     },
-    friendsID:[{
-        required: true,
-        type: String
-    }]
+    friendsList:[friendsListSchema]
 });
 
 module.exports = mongoose.model('friendsSchema',friendsSchema);

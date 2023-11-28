@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var objId = Schema.ObjectId;
 
 const notificationsSchema = new mongoose.Schema({
     senderID:{
+        required:true,
+        type: String
+    },
+    senderUsername:{
         required:true,
         type: String
     },

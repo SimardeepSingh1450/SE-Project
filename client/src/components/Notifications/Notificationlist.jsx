@@ -1,6 +1,24 @@
+import Cookies from 'universal-cookie';
+import axios from 'axios';
 
-export default function NotificationList({randomPerson,friendsList})
+export default function NotificationList({fetchNotifications,randomPerson,friendsList})
 {
+    const cookies = new Cookies();
+    const playerID = cookies.get("userId");
+    const username = cookies.get("username");
+
+    const handleNotificaionAccept = async(senderUsername,senderID)=>{
+        //call to acceptNotification
+        console.log('senderUsername is :',senderUsername);
+        const acceptCall = await axios.post('http://localhost:3005/notifications/acceptNotification',{senderUsername,senderID,playerID,username});
+
+        //then delete the notification and refetch() the notifications using prop-drilled fetchNotifications
+        const deleteCall = await axios.post('http://localhost:3005/notifications/deleteNotification',{senderID,receiverID:playerID});
+
+        //refetchNotificaations
+        fetchNotifications();
+    }
+
     return (
         <div className='friendsListComponent'>
                       <div class="mx-auto max-w-screen-lg px-4 py-8 sm:px-8">
@@ -23,17 +41,17 @@ export default function NotificationList({randomPerson,friendsList})
                                         <tr className='text-center'>
                                 
                                           <td className="border-b border-gray-200 bg-none px-5 py-5 ">
-                                            <div className="d-flex align-items-center">
+                                            <div className="d-flex align-items-center ml-5">
                                               <div className="h-10 w-10 flex-shrink-0">
                                                 <img className="h-full w-full rounded-full" src={randomPerson} alt="" />
                                               </div>
                                               <div className="ml-3">
-                                                <div className="">{item.userName}</div>
+                                                <div className="">{item.senderUsername}</div>
                                               </div>
                                             </div>
                                           </td>
                                           <td class="border-b border-gray-200 bg-none px-5 py-5 align-items-center">
-                                            <div class="whitespace-no-wrap">{item.gameId}</div>
+                                            <div class="whitespace-no-wrap">{item.senderID}</div>
                                           </td>
                                           <td class="border-b border-gray-200 bg-none px-5 py-5">
                                               <div className="d-flex align-items-center justify-content-center">
@@ -41,7 +59,7 @@ export default function NotificationList({randomPerson,friendsList})
                                                 <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                               </svg> */}
                                               <div className='col'>
-                                                <button className='btn btn-success'>Accept</button>
+                                                <button onClick={()=>{handleNotificaionAccept(item.senderUsername,item.senderID)}} className='btn btn-success'>Accept</button>
                                               </div>
                                               <div className='col'>
                                               <button className='btn btn-danger pl-1'>Reject</button>
