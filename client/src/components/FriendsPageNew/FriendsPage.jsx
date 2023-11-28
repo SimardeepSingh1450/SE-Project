@@ -130,6 +130,31 @@ const FriendsPageNew = () => {
       console.log('Sent notification');
   }
 
+  //handleRemoveClick
+  const handleRemoveClick = async(friendID)=>{
+      console.log('Inside handleRemoveClick Function');
+
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
+      const data = await fetch('http://localhost:3005/friends/deleteFriend', {
+          method: 'DELETE',
+          redirect: 'follow',
+          credentials: 'include', // Don't forget to specify this if you need cookies
+          headers: headers,
+          body: JSON.stringify({friendID:friendID,playerID:playerID})
+      })
+
+      //refetch the friends
+      fetchFriendsFn();
+      //refetch not friends
+      fetchNotFriends();
+
+      const res = await data.json();
+      console.log(res);
+  }
+
 
   useEffect(()=>{
     checkFn();
@@ -214,7 +239,7 @@ const FriendsPageNew = () => {
                                       <span class={`rounded-full ${item.status=='Active'?'bg-green-200':'bg-red-200'} px-3 py-1 text-xs font-semibold ${item.status=='Active'?'text-green-900':'text-red-900'}`}>{item.status}</span>
                                     </td> */}
                                     <td class="px-6 py-4 border-b">
-                                        <span href="#" class="rounded-full text-red-900 bg-red-200 px-3 py-1 text-base font-semibold cursor-pointer">Remove</span>
+                                        <button onClick={()=>{handleRemoveClick(item.friendID)}} className="rounded-full text-red-900 bg-red-200 px-3 py-1 text-base font-semibold cursor-pointer">Remove</button>
                                     </td>
                                 </tr>
                               )

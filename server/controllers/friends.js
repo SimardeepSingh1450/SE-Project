@@ -20,20 +20,18 @@ const deleteFriend = async(req,res)=>{
     
     //finding the player and deleting the friend from its friend array
     const result = await friendsModel.findOne({playerID:playerID});
-    const newArray = [];
-    
-    //iterating inside the friends and skipping the delete one
-    for(let i=0;i<result.friendsID.length;i++){
-        if(result.friendsID[i]!=friendID){
-            newArray.push(item);
-        }
+
+    //delete-logic
+    let dummy = [];
+    for(let i=0;i<result.friendsList.length;i++){
+        if(result.friendsList[i].friendID == friendID) continue;
+        else dummy.push(result.friendsList[i]);
     }
+    //update the data using dummy
+    result.friendsList = dummy;
+    dummy.length = 0;
 
-    result.friendsID = newArray;
-    //clear the newArray
-    newArray.length = 0;
-
-    //save the newArray
+    //save the new data
     await result.save();
 
     res.json({msg:`Deleted the friend with ID: ${friendID}`});
