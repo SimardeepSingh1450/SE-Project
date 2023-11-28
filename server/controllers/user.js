@@ -95,5 +95,12 @@ async function handleUserLogin(req,res){
     return res.status(201).json({userId:users[0].id,token,user:user,msg:"User LoggedIn Successfully"});
 }
 
+const fetchUserInfo = async(req,res)=>{
+    const {playerID} = req.body;
+    const user = await userModel.findOne({PlayerID:playerID});
 
-module.exports = {handleUserSignUp,handleUserLogin};
+    return res.json({userInfo:user});
+}
+
+
+module.exports = {handleUserSignUp,handleUserLogin,fetchUserInfo};

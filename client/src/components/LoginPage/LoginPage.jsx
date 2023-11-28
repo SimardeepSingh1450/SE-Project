@@ -160,9 +160,9 @@ const LoginPage = () => {
         </button>
       </div>
 
-      <button className="mt-4 inline-block align-baseline font-bold text-sm text-pink-500 hover:text-pink-600" href="#">
+      {/* <button className="mt-4 inline-block align-baseline font-bold text-sm text-pink-500 hover:text-pink-600" href="#">
           Forgot Password?
-        </button>
+        </button> */}
     </div>
 
   </form>
