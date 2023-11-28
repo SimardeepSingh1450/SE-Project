@@ -59,7 +59,6 @@ async function getData() {
         //     datePlayed: '24 Sept, 2023'
         // },
     ]
-
     return {user, friends, games}
 
 }
@@ -98,9 +97,11 @@ export default function Profile() {
         <div className="container pt-4 gap-3" id='container-blur'>
         <div className='container-blur'>
             <div className="row pb-5">
-                <div className="col-3 d-flex justify-content-center " id='ongabunga'>
-                    <div className='profile-pic-container'></div>
+                <div className="col-3  " id='ongabunga'>
+                    <div className='profile-pic-container'>
                         <img src="https://res.cloudinary.com/dv7jje0bw/image/upload/v1700427015/Software-Engineering-MP-Game/gamelogo_qeq6xq.jpg" className="profile-pic img-fluid"/>
+                    </div>
+                        
     
                 </div>
                 <div className="col-5">
@@ -113,9 +114,9 @@ export default function Profile() {
                     </div>
                 </div>
                 <div className="col-4">
-                    <h5>Global Rank: #{user.rank}</h5>
-                    <h5>Wins: {user.wins}</h5>
-                    <h5>Losses: {user.losses}</h5>
+                    <h3>Global Rank: #{user.rank}</h3>
+                    <h3>Wins: {user.wins}</h3>
+                    <h3>Losses: {user.losses}</h3>
                     {/* <Form>
                         <button onClick={()=>setOpenEditPopup(true)} type="submit" className="btn btn-outline-primary mt-auto edit-profile-button">Edit Profile</button>
                     </Form> */}
@@ -128,17 +129,19 @@ export default function Profile() {
                     {games.map((obj) => {
                         return <div key={obj.name} className='mt-4 mb-4'>
                                     <div className='row gamesPlayed d-flex align-items-center shadow-lg'>
-                                        <div className='col-7'>
-                                            <div className='row d-inline-block'><span className='mute-text'>Played Against:</span> {obj.name}</div>
-                                            <div className='row d-inline-block'><span className='mute-text'>Date Played:</span> {obj.datePlayed}</div>
-                                        </div>
-                                        <div className='col'>
+                                        {/* <div className='col'> */}
+                                            <div className='col'><span className='mute-text'>Played Against:</span> {obj.name}</div>
+                                            <div className='col'><span className='mute-text'>Date Played:</span> {obj.datePlayed}</div>
+                                        {/* </div> */}
+                                        <div className='col text-center'>
                                             <span className={obj.status === 'win' ? 'winGame' : 'looseGame'}>{obj.status}</span>
                                         </div>
                                     </div>
                                 </div>
                         
                     })}
+                    
+                    
                 </div>
 
 
