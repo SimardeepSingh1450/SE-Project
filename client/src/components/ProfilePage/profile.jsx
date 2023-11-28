@@ -144,7 +144,7 @@ export default function Profile() {
 
 
 
-                <div className='col-4'>
+                {/* <div className='col-4'>
                     <div className='profile-titles pt-2 pb-2 rounded-pill shadow-lg border-dark-subtle d-flex justify-content-center'>Friends List</div>
                     {friends.map((obj) => {
                         const name = obj.name.title + ' ' + obj.name.first + ' ' + obj.name.last;
@@ -158,7 +158,7 @@ export default function Profile() {
                                 </div>
                     })}
                     
-                </div>
+                </div> */}
             </div>
 
             {/*Open Pop-Up Component */}
