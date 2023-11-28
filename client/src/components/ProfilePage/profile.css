@@ -18,15 +18,17 @@ body {
   position: relative;
 }
 
+
 .main-profile-div {
   /* overflow:auto; */
   height: 92vh;
   /* border-style: solid; */
   /* border-width: 20px; */
   /* border-radius: 10px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  padding-top: 2.5em;
 }
 
 #container-blur {
@@ -34,7 +36,8 @@ body {
   backdrop-filter: blur(25px);
   color: rgb(207, 207, 207);
   text-shadow: 0 0 50px #ffffffc1;
-  height: 83vh;
+  /* height: 83vh; */
+  /* overflow: scroll; */
   border-style: solid;
   border-width: 1px;
   border-color: none;
@@ -59,9 +62,12 @@ body {
 } */
 
 .profile-pic {
-
-  max-width: 100%;
-  max-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  max-width: 90%;
+  max-height: 90%;
   object-fit: cover;
   object-position: 50% 50%;
   border-radius: 100%;
@@ -83,7 +89,7 @@ body {
   }
 } */
 
-.profile-pic:hover {
+#ongabunga:hover {
 
   transform: scale(1.05);
 }
@@ -218,3 +224,8 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.scroll-data{
+  overflow-y: scroll;
+  overflow-x: initial;
+  height: 50%;
+}
