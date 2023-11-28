@@ -49,6 +49,7 @@ async function handleUserSignUp(req,res){
 
     //Adding user inside playerStatsDB
     const stats = new playerStatsModel({
+        playerUsername:username,
         playerID:newUserID,
         wins:0,
         losses:0,

@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var objId = Schema.ObjectId;
 
 const playerStatsSchema = new mongoose.Schema({
     playerID:{
@@ -16,6 +14,10 @@ const playerStatsSchema = new mongoose.Schema({
     gamesPlayed:{
         type:Number
     },
+    playerUsername:{
+        type:String,
+        required:true
+    }
 });
 
 module.exports = mongoose.model('playerStatsSchema',playerStatsSchema);

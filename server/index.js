@@ -30,6 +30,7 @@ const friendsRouter = require('./routes/friends');
 const statsRouter = require('./routes/stats');
 const gamingHistory = require('./routes/history');
 const notificationsRouter = require("./routes/notifications");
+const leaderboardRouter = require("./routes/leaderboard");
 
 /*Middlewares*/
 app.use(express.json());
@@ -48,6 +49,7 @@ app.use('/friends',restrictToLoggedInUserOnly,friendsRouter);//Friends-List ROut
 app.use('/stats',statsRouter);
 app.use('/history',gamingHistory);
 app.use('/notifications',notificationsRouter);
+app.use('/leaderboard',leaderboardRouter);
 
 //Authentication Path Restricted ROUTE
 app.get('/loggedIn',restrictToLoggedInUserOnly,(req,res)=>{

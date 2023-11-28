@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './leaderboard.css'
 import randomPerson from './assets/random.jpeg'
 import ButtonAppBar from '../Navbar/navbar';
@@ -13,19 +13,45 @@ const dummyData = [
 
 const Leaderboard = () => {
   const [friendName,setFriendName] = useState('');
-  const [friendsList,setFriendsList] = useState(dummyData);
+  const [friendsList,setFriendsList] = useState([]);
   
   const handleSubmitClick=()=>{
       if(friendName != ''){
-        const results = dummyData.filter((item)=>{
+        const results = friendsList.filter((item)=>{
           return item.userName.toLowerCase().startsWith(friendName.toLowerCase());
         });
         //Setting the new Filtered out Data in the State
         setFriendsList(results);
       }else{
-        setFriendsList(dummyData);
+        setFriendsList(friendsList);
       }
-  }  
+  } 
+
+  const fetchLeaderBoard = async() =>{
+      console.log('Inside fetchLeaderBoard Function');
+
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
+      const data = await fetch('http://localhost:3005/leaderboard/fetchLeaderBoard', {
+          method: 'GET',
+          redirect: 'follow',
+          credentials: 'include', // Don't forget to specify this if you need cookies
+          headers: headers
+      })
+
+      const res = await data.json();
+      console.log('LeaderBoard Array from backend is :',res);
+
+      //setting the data
+      setFriendsList(res.arrayOfPlayers);
+  } 
+
+  useEffect(()=>{
+    //fetching the leaderboard from the backend
+    fetchLeaderBoard();
+  },[])
 
   return (
     <>
@@ -53,7 +79,7 @@ const Leaderboard = () => {
                     </div>
 
                     <div className='friendsListComponent'>
-                <div class="mx-auto max-w-screen-lg px-4 py-8 sm:px-8">
+                <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-8">
                  
                   <div class="overflow-y-hidden rounded-lg border">
                     <div class="overflow-x-auto">
@@ -63,7 +89,7 @@ const Leaderboard = () => {
                             <th class="px-5 py-3">Rank</th>
                             <th class="px-5 py-3">Username</th>
                             <th class="px-5 py-3">Game ID</th>
-                            <th class="px-5 py-3">Number of Wins</th>
+                            <th class="px-5 py-3">Wins / Games / Losses</th>
                           </tr>
                         </thead>
 
@@ -81,15 +107,15 @@ const Leaderboard = () => {
                                           <img className="h-full w-full rounded-full" src={randomPerson} alt="" />
                                         </div>
                                         <div className="ml-3">
-                                          <div className="">{item.userName}</div>
+                                          <div className="">{item.playerUsername == null ? "":item.playerUsername}</div>
                                         </div>
                                       </div>
                                     </td>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 align-items-center text-xl">
-                                      <div class="whitespace-no-wrap">{item.gameId}</div>
+                                      <div class="whitespace-no-wrap">{item.playerID}</div>
                                     </td>
                                     <td class="border-b border-gray-200 bg-none px-5 py-5 align-items-center text-xl">
-                                        <div class={`${(indx%2) === 0 ? 'first' : 'second'}`} id='changew'>{item.wins}</div>
+                                        <div class={`${(indx%2) === 0 ? 'first' : 'second'}`} id='changew'>{item.wins} / {item.gamesPlayed} / {item.losses}</div>
                                     </td>
                                 </tr>
                               )
