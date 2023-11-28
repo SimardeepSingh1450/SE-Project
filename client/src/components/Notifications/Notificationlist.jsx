@@ -19,6 +19,29 @@ export default function NotificationList({fetchNotifications,randomPerson,friend
         fetchNotifications();
     }
 
+    const handleNotificaionReject = async(senderID) =>{
+      //call to delete api
+      const deleteCall = await axios.post('http://localhost:3005/notifications/deleteNotification',{senderID,receiverID:playerID});
+
+      //remove the playerID from pending status in friendsList of senderID using deleteFriend api call
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
+      const data = await fetch('http://localhost:3005/friends/deleteFriend', {
+          method: 'DELETE',
+          redirect: 'follow',
+          credentials: 'include', // Don't forget to specify this if you need cookies
+          headers: headers,
+          body: JSON.stringify({friendID:playerID,playerID:senderID})
+      })
+
+      console.log('After pending deletion:',data);
+
+      //refetchNotificaations
+      fetchNotifications();
+    }
+
     return (
         <div className='friendsListComponent'>
                       <div class="mx-auto max-w-screen-lg px-4 py-8 sm:px-8">
@@ -62,7 +85,7 @@ export default function NotificationList({fetchNotifications,randomPerson,friend
                                                 <button onClick={()=>{handleNotificaionAccept(item.senderUsername,item.senderID)}} className='btn btn-success'>Accept</button>
                                               </div>
                                               <div className='col'>
-                                              <button className='btn btn-danger pl-1'>Reject</button>
+                                              <button onClick={()=>{handleNotificaionReject(item.senderID)}} className='btn btn-danger pl-1'>Reject</button>
                                               </div>
                                               
                                               </div>

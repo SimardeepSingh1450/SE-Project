@@ -16,7 +16,8 @@ const dummyData = [
 
 const FriendsPageNew = () => {
   const [friendName,setFriendName] = useState('');
-  const [friendsList,setFriendsList] = useState(dummyData);
+  const [notFriendName,setNotFriendName] = useState('');
+  const [friendsList,setFriendsList] = useState([]);
   const [notFriends,setNotFriends] = useState([]);
   
   const cookies = new Cookies();
@@ -45,13 +46,31 @@ const FriendsPageNew = () => {
   
   const handleSubmitClick=()=>{
       if(friendName != ''){
-        const results = dummyData.filter((item)=>{
-          return item.userName.toLowerCase().startsWith(friendName.toLowerCase());
+        const results = friendsList.filter((item)=>{
+          return item.friendUsername.toLowerCase().startsWith(friendName.toLowerCase());
         });
         //Setting the new Filtered out Data in the State
         setFriendsList(results);
       }else{
-        setFriendsList(dummyData);
+        //refetch the friends
+        fetchFriendsFn();
+
+        setFriendsList(friendsList);
+      }
+  }
+
+  const handleSubmitClickTwo=()=>{
+      if(notFriendName != ''){
+        const results = notFriends.filter((item)=>{
+          return item.username.toLowerCase().startsWith(notFriendName.toLowerCase());
+        });
+        //Setting the new Filtered out Data in the State
+        setNotFriends(results);
+      }else{
+        //refetch not Friends
+        fetchNotFriends();
+
+        setNotFriends(notFriends);
       }
   }
 
@@ -270,8 +289,8 @@ const FriendsPageNew = () => {
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
                             </div> */}
-                            <input onChange={(e)=>setFriendName(e.target.value)} type="search" id="default-search" class="max-w-full w-[400px] block p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Friend" required/>
-                            <button onClick={()=>{handleSubmitClick()}} type="submit" class="btn btn-primary" id='search-btn'>Search</button>
+                            <input onChange={(e)=>setNotFriendName(e.target.value)} type="search" id="default-search" class="max-w-full w-[400px] block p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Friend" required/>
+                            <button onClick={()=>{handleSubmitClickTwo()}} type="submit" class="btn btn-primary" id='search-btn'>Search/ViewAll</button>
                         </div>
                     </div>
 

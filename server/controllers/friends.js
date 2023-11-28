@@ -31,6 +31,8 @@ const deleteFriend = async(req,res)=>{
     result.friendsList = dummy;
     dummy.length = 0;
 
+    console.log('New result after delete friend :',result.friendsList);
+
     //save the new data
     await result.save();
 
