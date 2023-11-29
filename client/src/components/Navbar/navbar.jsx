@@ -24,7 +24,7 @@ export default function ButtonAppBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-custom temp">
       <div className="d-flex align-items-center pl-5">
-        <div className="navbar-brand fw-bold"><Link to="/" style={linkStyle} id="heading">MP Game</Link></div>
+        <div className="navbar-brand fw-bold"><Link to="/profile" style={linkStyle} id="heading">MP Game</Link></div>
         <div className="nav-link ml-1"><Link to="/dashboard" style={linkStyle} id='dash' className='links'>DashBoard</Link></div>
         <div className="nav-link ml-5"><Link to="/profile" style={linkStyle} id='profile' className='links'>Profile</Link></div>
         <div className="nav-link ml-5"><Link to="/notificationsPage" style={linkStyle} id='notifications' className='links'>Notifications</Link></div>

@@ -21,6 +21,7 @@ function App() {
       <Route path="/notificationsPage" element={<Notifications/>}/>
       <Route path='/leaderboard' element={<Leaderboard />} />
       <Route path="/profile" element={<Profile/>}/>
+      <Route path="/" element={<Profile/>}/>
       </Routes>
     </div>
   );

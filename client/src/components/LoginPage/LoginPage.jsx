@@ -79,9 +79,10 @@ const LoginPage = () => {
         const res = await data.json();
         console.log('Data from login fetch is :',res);
         
-        if(res.doesNotExist){
+        if(res.doesNotExist || res.msg == 'Email is incorrect'){
           setPassPrompt(true);
           setPromptMsg("No user found in Database.");
+          return;
         }else{
           //else we navigate to the dashboard and set the uuid inside localStorage
           console.log(res.msg);
