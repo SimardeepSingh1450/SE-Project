@@ -79,7 +79,7 @@ const LoginPage = () => {
         const res = await data.json();
         console.log('Data from login fetch is :',res);
         
-        if(res.doesNotExist || res.msg == 'Email is incorrect'){
+        if(res.doesNotExist || res.msg == 'Email is incorrect' || res.msg == 'Password is incorrect'){
           setPassPrompt(true);
           setPromptMsg("No user found in Database.");
           return;
@@ -100,13 +100,13 @@ const LoginPage = () => {
         }
     }
 
-    // useEffect(()=>{
-    //   const initialDisconnect = async()=> {
-    //    await client.disconnectUser();
-    //   }
-
-    //   initialDisconnect();
-    // },[])
+    useEffect(()=>{
+      const initialDisconnect = async()=> {
+       await client.disconnectUser();
+      }
+      connectFunction();
+      // initialDisconnect();
+    },[])
 
   return (
     <div className='mainLoginPageDiv'>
