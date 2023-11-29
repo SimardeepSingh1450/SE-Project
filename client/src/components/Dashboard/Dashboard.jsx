@@ -64,9 +64,9 @@ export default function DashBoard() {
                 <div className='main-dashbard'>
                 <div className='title'>Start Game</div>
                 <TicTacToe className='tictactoe'/>
-                <div className='button-container'>
+                <div className='button-container align-items-center justify-content-center'>
+                    <input onChange={(e)=>{setOpponentName(e.target.value)}} className='game-room-input' placeholder='Enter the username of your Opponent...' id='text'/>
                     <button onClick={()=>{createChannel()}} type="button" className='button' id='join'>Join Room/Create Game</button>
-                    <input onChange={(e)=>{setOpponentName(e.target.value)}} className='game-room-input' placeholder='Enter the username of your Opponent...'/>
                     {/* <button type="button" className='button' id='rand'>Play With Random</button>
                     <button type="button" className='button' id='create'>Create Room</button> */}
                 </div>

@@ -19,8 +19,8 @@
 
 .main-dashbard {
     /* min-height: 100vh; */
-    height: 93.2vh;
-    overflow: scroll;
+    height: 93vh;
+    /* overflow: scroll; */
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     position: relative;
@@ -49,12 +49,7 @@
     transform: translate(-50%,-55%);
 }
 
-.button-container{
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
+
 
 .button
 {
@@ -109,4 +104,44 @@
 @keyframes blink-caret {
   from, to { border-color: transparent }
   50% { border-color: orange; }
+}
+
+.button-container{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+
+.game-room-input::placeholder {
+    color: white;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+.game-room-input {
+    background-color: transparent;
+    width: 100%;
+    border: 1px solid white;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Pixelify Sans', sans-serif;
+    margin-bottom: 1em;
+    transition: all 0.1s ease-in-out;
+
+}
+
+.game-room-input:focus {
+    outline: none;
+    transform: scale(1.05);
+    border-width: 3px;
+}
+
+#text {
+    box-shadow: 0 0 20px white;
+    /* border: 1px solid #white;  */
+    /* color: #01fff4; */
 }
