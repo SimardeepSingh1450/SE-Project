@@ -67,6 +67,9 @@ async function handleUserSignUp(req,res){
 async function handleUserLogin(req,res){
     const {email,password} = req.body;
     const user = await userModel.findOne({email:email});
+    if (!user) {
+        return res.json({msg:'Email is incorrect'})
+    }
     const isMatch = await bcrypt.compare(password,user.password);
 
     if(!isMatch){
