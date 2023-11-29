@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState ,useEffect, useMemo} from 'react'
 import './SignUpPage.css'
 import {motion} from 'framer-motion';
 import LoginBg from '../LoginPage/assets/laser-beam-login.mp4'
@@ -24,16 +24,16 @@ const LoginPage = () => {
     const [promptMsg,setPromptMsg] = useState("");
     const [passPrompt,setPassPrompt] = useState(false);
 
-    if(token){
-            client.connectUser({
+        if(token){
+              client.connectUser({
               id:cookies.get('userId'),
               name:cookies.get('username'),
               hashedPassword:cookies.get('hashedPassword'),
             },token).then((user)=>{
               console.log('getStream Account User:',user)
             })
-          }
-
+        }
+        
 
     const signUpHandle=async()=>{
         if(username == ""){
@@ -58,6 +58,11 @@ const LoginPage = () => {
             return
         }else{
             setPassPrompt(false);
+        }
+
+        //client-already present check
+        if(client){
+          await client.disconnectUser();
         }
 
         //Authentiation Handelling code
@@ -89,17 +94,24 @@ const LoginPage = () => {
           cookies.set("username",res.user.username);
           cookies.set("password",res.user.password);//this is hashed password
           cookies.set("userId",res.userId);
+          
         }
 
     }
 
-    useEffect(()=>{
-      cookies.remove('token');
-      const disUser = async()=>{
-        await client.disconnectUser();
-      }
+    const disUser = async()=>{
+      await client.disconnectUser();
+    }
 
-      disUser();
+    useEffect(()=>{
+      if(cookies.get('token')){
+        cookies.remove('token');        
+      }
+      
+      // if(client){
+      //   disUser();
+      // }
+      
     },[])
 
   return (

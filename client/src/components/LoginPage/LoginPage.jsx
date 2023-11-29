@@ -40,7 +40,6 @@ const LoginPage = () => {
         if(email == ""){
             setPassPrompt(true);
             setPromptMsg("Please input a valid email.");
-            return;
         }else{
             setPassPrompt(false);
         }
@@ -48,7 +47,6 @@ const LoginPage = () => {
         if(pass == ""){
             setPassPrompt(true);
             setPromptMsg("Please choose a password.");
-            return;
         }else{
             setPassPrompt(false);
         }
