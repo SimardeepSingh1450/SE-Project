@@ -18,7 +18,7 @@ export default function ButtonAppBar() {
   const logOutHandle = async() =>{
     await client.disconnectUser();
     cookies.remove("uid");
-    cookies.remove("userId");
+    // cookies.remove("userId");
   }
 
   return (
