@@ -24,15 +24,15 @@ const LoginPage = () => {
     const [promptMsg,setPromptMsg] = useState("");
     const [passPrompt,setPassPrompt] = useState(false);
 
-        if(token){
-              client.connectUser({
-              id:cookies.get('userId'),
-              name:cookies.get('username'),
-              hashedPassword:cookies.get('hashedPassword'),
-            },token).then((user)=>{
-              console.log('getStream Account User:',user)
-            })
-        }
+        // if(token){
+        //       client.connectUser({
+        //       id:cookies.get('userId'),
+        //       name:cookies.get('username'),
+        //       hashedPassword:cookies.get('hashedPassword'),
+        //     },token).then((user)=>{
+        //       console.log('getStream Account User:',user)
+        //     })
+        // }
         
 
     const signUpHandle=async()=>{
@@ -89,11 +89,11 @@ const LoginPage = () => {
         }else{
           setPassPrompt(true);
           setPromptMsg("Successfully Signed Up");
-
-          cookies.set("token",res.token);
-          cookies.set("username",res.user.username);
-          cookies.set("password",res.user.password);//this is hashed password
-          cookies.set("userId",res.userId);
+          await client.disconnectUser();
+          // cookies.set("token",res.token);
+          // cookies.set("username",res.user.username);
+          // cookies.set("password",res.user.password);//this is hashed password
+          // cookies.set("userId",res.userId);
           
         }
 
