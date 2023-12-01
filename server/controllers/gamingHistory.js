@@ -32,6 +32,9 @@ const fetchGamingHistory = async(req,res)=>{
         }
     }
 
+    //reverse the array in order to get latest one on top
+    history.reverse();
+
     return res.json({history:history,idMap:idMap});
 }
 
