@@ -24,16 +24,21 @@ const LoginPage = () => {
     const [promptMsg,setPromptMsg] = useState("");
     const [passPrompt,setPassPrompt] = useState(false);
 
-        if(token){
-              client.connectUser({
-              id:cookies.get('userId'),
-              name:cookies.get('username'),
-              hashedPassword:cookies.get('hashedPassword'),
-            },token).then((user)=>{
-              console.log('getStream Account User:',user)
-            })
-        }
-        
+    useMemo(async() =>{
+
+      if(token){
+          await client.disconnectUser();
+
+          client.connectUser({
+            id:cookies.get('userId'),
+            name:cookies.get('username'),
+            hashedPassword:cookies.get('hashedPassword'),
+          },token).then((user)=>{
+            console.log('getStream Account User:',user)
+          })
+
+      }
+      },[cookies])
 
     const signUpHandle=async()=>{
         if(username == ""){
@@ -61,9 +66,9 @@ const LoginPage = () => {
         }
 
         //client-already present check
-        if(client){
-          await client.disconnectUser();
-        }
+        // if(client){
+        //   await client.disconnectUser();
+        // }
 
         //Authentiation Handelling code
         // const res = await axios.post('http://localhost:3005/user/signup',{email:email,username:username,password:pass});
@@ -89,29 +94,24 @@ const LoginPage = () => {
         }else{
           setPassPrompt(true);
           setPromptMsg("Successfully Signed Up");
-          // await client.disconnectUser();
+
+          if(client)  await client.disconnectUser();
+
           cookies.set("token",res.token);
           cookies.set("username",res.user.username);
           cookies.set("password",res.user.password);//this is hashed password
           cookies.set("userId",res.userId);
           
+          // connectFunction();
         }
 
     }
 
-    const disUser = async()=>{
-      await client.disconnectUser();
-    }
-
     useEffect(()=>{
-      if(cookies.get('token')){
-        cookies.remove('token');        
+      const temp = cookies.getAll();
+      for (var i in temp) {
+        cookies.remove(i);
       }
-      
-      // if(client){
-      //   disUser();
-      // }
-      
     },[])
 
   return (

@@ -11,11 +11,14 @@ import GamePage from '../GamePage/GamePage'
 import {StreamChat} from 'stream-chat';
 import {Channel,Chat} from 'stream-chat-react';
 import ButtonAppBar from '../Navbar/navbar';
+import Cookies from 'universal-cookie';
 
 export default function DashBoard() {
     const [opponentName,setOpponentName] = useState("");
     const navigate = useNavigate();
     const api_key = "jhw8xp9vt565";
+    const cookies = new Cookies();
+    const token = cookies.get('token');
     const client = StreamChat.getInstance(api_key);
 
     const [channel,setChannel] = useState();
@@ -49,6 +52,19 @@ export default function DashBoard() {
         }
 
         checkFn();
+
+
+        client.connectUser({
+            id:cookies.get('userId'),
+            name:cookies.get('username'),
+            hashedPassword:cookies.get('hashedPassword'),
+          },token).then((user)=>{
+            console.log('getStream Account User:',user)
+            if(user == undefined){
+                alert('Socket Breakage Occured, please login again');
+                navigate("/loginPage");
+            }
+          })
     },[]);
 
     return (

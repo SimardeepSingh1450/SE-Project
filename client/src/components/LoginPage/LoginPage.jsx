@@ -21,19 +21,6 @@ const LoginPage = () => {
     const [pass,setPass] = useState("");
     const [passPrompt,setPassPrompt] = useState(false);
     const [promptMsg,setPromptMsg] = useState("");
-
-    const connectFunction = () =>{
-
-      if(token){
-        client.connectUser({
-          id:cookies.get('userId'),
-          name:cookies.get('username'),
-          hashedPassword:cookies.get('hashedPassword'),
-        },token).then((user)=>{
-          console.log('getStream Account User:',user)
-        })
-      }
-    }
     
 
     const signInHandle=async()=>{
@@ -81,7 +68,7 @@ const LoginPage = () => {
         
         if(res.doesNotExist || res.msg == 'Email is incorrect' || res.msg == 'Password is incorrect'){
           setPassPrompt(true);
-          setPromptMsg("No user found in Database.");
+          setPromptMsg(res.msg);
           return;
         }else{
           //else we navigate to the dashboard and set the uuid inside localStorage
@@ -89,13 +76,19 @@ const LoginPage = () => {
 
           // //Then we setup GETSTREAM Cookies
           //Now Setting up cookies for GetSTream.io
-          client.disconnectUser();
           cookies.set("token",res.token);
           cookies.set("username",res.user.username);
           cookies.set("password",res.user.password);//this is hashed password
           cookies.set("userId",res.userId);
 
-          connectFunction();
+          // connectFunction();
+          // client.connectUser({
+          //   id:cookies.get('userId'),
+          //   name:cookies.get('username'),
+          //   hashedPassword:cookies.get('hashedPassword'),
+          // },token).then((user)=>{
+          //   console.log('getStream Account User:',user)
+          // })
 
           navigate("/dashboard");
         }
@@ -103,10 +96,17 @@ const LoginPage = () => {
 
     useEffect(()=>{
       const initialDisconnect = async()=> {
+        if(client)
        await client.disconnectUser();
       }
-      connectFunction();
-      // initialDisconnect();
+      // connectFunction();
+      initialDisconnect();
+
+      //REmove all cookies
+      const temp = cookies.getAll();
+      for (var i in temp) {
+        cookies.remove(i);
+      }
     },[])
 
   return (
