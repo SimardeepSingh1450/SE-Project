@@ -111,10 +111,10 @@ const Board = ({result,setResult,setChannel}) => {
         }
     }
 
-    const exitButton = async()=>{
+    const exitButton = ()=>{
         if(matchEnded || matchTied){
             apiCallerFn();
-            
+
             //finally navigate to dashboard
             navigate("/dashboard");
         }
