@@ -127,19 +127,19 @@ const Board = ({result,setResult,setChannel}) => {
             //the incremenet the wins of the winner and update gaming history of both the players, then navigate to dashboard screen
 
             //see which player is loose and which is winner and update the stats accordingly
-            if(result.winner == player){// means the eventUser is the winner
-                const res = await axios.post('http://localhost:3005/stats/win',{playerID:eventUser.id});
+            if(result.winner == player){// means the clientUser is the winner
+                const res = await axios.post('http://localhost:3005/stats/win',{playerID:clientUser.id});
                 console.log('Msg after updating the stats of winner:',res.data);
 
                 //now updating the gaming history of winner
-                const res3 = await axios.post('http://localhost:3005/history/updateHistory',{loserID:clientUser.id,winnerID:eventUser.id,playerID:eventUser.id,winType:"win"});
+                const res3 = await axios.post('http://localhost:3005/history/updateHistory',{loserID:eventUser.id,winnerID:clientUser.id,playerID:clientUser.id,winType:"win"});
                 console.log('Msg after updating gaming-history of winner :',res3.data);
             }else{//client is the winner and eventUser is the looser
                 //increment the loss of the looser
-                const res2 = await axios.post('http://localhost:3005/stats/loss',{playerID:eventUser.id});
+                const res2 = await axios.post('http://localhost:3005/stats/loss',{playerID:clientUser.id});
                 console.log('Msg after updating the stats of looser:',res2.data);
                 //now updating the gaming history of looser
-                const res4 = await axios.post('http://localhost:3005/history/updateHistory',{loserID:eventUser.id,winnerID:clientUser.id,playerID:eventUser.id,winType:"loss"});
+                const res4 = await axios.post('http://localhost:3005/history/updateHistory',{loserID:clientUser.id,winnerID:eventUser.id,playerID:clientUser.id,winType:"loss"});
                 console.log('Msg after updating gaming-history of looser :',res4.data);
             }
             
