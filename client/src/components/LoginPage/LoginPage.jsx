@@ -89,6 +89,7 @@ const LoginPage = () => {
 
           // //Then we setup GETSTREAM Cookies
           //Now Setting up cookies for GetSTream.io
+          client.disconnectUser();
           cookies.set("token",res.token);
           cookies.set("username",res.user.username);
           cookies.set("password",res.user.password);//this is hashed password
